@@ -9,5 +9,5 @@
     <warLocation></warLocation>
     <extraInfo></extraInfo>
     <mavenClasspath>false</mavenClasspath>
-    <webPath>/Project6-BDD</webPath>
+    <webPath>/tp6</webPath>
 </tomcatProjectProperties>

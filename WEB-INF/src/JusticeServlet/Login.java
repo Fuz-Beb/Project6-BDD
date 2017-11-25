@@ -60,9 +60,9 @@ public class Login extends HttpServlet
                 // tous les JSP sont dans /WEB-INF/
                 // ils ne peuvent pas être appelés directement par l'utilisateur
                 // seulement par un autre JSP ou un servlet
-                /*RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/selectionMembre.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                 dispatcher.forward(request, response);
-                session.setAttribute("etat", new Integer(BiblioConstantes.CONNECTE));*/
+                session.setAttribute("etat", JusticeConstantes.CONNECTE);
             }
             else
             {

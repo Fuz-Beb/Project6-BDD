@@ -35,8 +35,72 @@
     <servlet-name>Login</servlet-name>
     <servlet-class>JusticeServlet.Login</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>Accueil</servlet-name>
+    <servlet-class>JusticeServlet.Accueil</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>JusticeServlet.Logout</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Proces</servlet-name>
+    <servlet-class>JusticeServlet.Proces</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Partie</servlet-name>
+    <servlet-class>JusticeServlet.Partie</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Session</servlet-name>
+    <servlet-class>JusticeServlet.Session</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Juge</servlet-name>
+    <servlet-class>JusticeServlet.Juge</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Jury</servlet-name>
+    <servlet-class>JusticeServlet.Jury</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Avocat</servlet-name>
+    <servlet-class>JusticeServlet.Avocat</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Accueil</servlet-name>
+    <url-pattern>/Accueil</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Proces</servlet-name>
+    <url-pattern>/Proces</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Partie</servlet-name>
+    <url-pattern>/Partie</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Session</servlet-name>
+    <url-pattern>/Session</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Juge</servlet-name>
+    <url-pattern>/Juge</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Jury</servlet-name>
+    <url-pattern>/Jury</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Avocat</servlet-name>
+    <url-pattern>/Avocat</url-pattern>
   </servlet-mapping>
 </web-app>

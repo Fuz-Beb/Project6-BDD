@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,java.text.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,java.text.*,Justice.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -13,12 +13,141 @@ CONTENT="Gestion des jurys">
 <CENTER>
 <H1>Système de gestion d'un palais de justice</H1>
 <H1>Gestion des jurys</H1>
+</CENTER>
+<H3>Création</H3>
+<TABLE style="border: 1px solid #A4A4A4">
+  <tr>
+    <td>Nas</td>
+		<td>Prenom</td>
+		<td>Nom</td>
+		<td>Sexe</td>
+		<td>Age</td>
+	</tr>
+  <tr>
+    <form action="Jury" method="POST">
+<%    if (request.getParameter("nas") != null)
+    { %>
+      <td> <input type="text" name="nas" value='<%= request.getParameter("nas") %>' /> </td>
+    <%}
+    else
+    { %>
+      <td> <input type="text" name="nas" value="" /> </td>
+    <%}
+
+    if (request.getParameter("prenom") != null)
+    { %>
+      <td> <input type="text" name="prenom" value='<%= request.getParameter("prenom") %>' /> </td>
+    <%}
+    else
+    { %>
+      <td> <input type="text" name="prenom" value="" /> </td>
+    <%}
+
+    if (request.getParameter("nom") != null)
+    { %>
+      <td> <input type="text" name="nom" value='<%= request.getParameter("nom") %>' /> </td>
+    <%}
+    else
+    { %>
+      <td> <input type="text" name="nom" value="" /> </td>
+    <%}
+
+    if (request.getParameter("sexe") != null)
+    { %>
+      <td>
+        <SELECT name = "sexe" size="1">
+          <OPTION> M </OPTION>
+          <OPTION> F </OPTION>
+        </SELECT>
+      </td>
+    <%}
+    else
+    { %>
+      <td>
+        <SELECT name = "sexe" size="1">
+          <OPTION> M </OPTION>
+          <OPTION> F </OPTION>
+        </SELECT>
+      </td>
+    <%}
+
+    if (request.getParameter("age") != null)
+    { %>
+      <td> <input type="text" name="age" value='<%= request.getParameter("age") %>' /> </td>
+    <%}
+    else
+    { %>
+      <td> <input type="text" name="age" value="" /> </td>
+    <%}
+    %>
+    <td><input type="submit" name="Valider" value="Ajouter"></td>
+    </form>
+  </tr>
+</table>
+
+<H3>Assigner</H3>
+<form action="Jury" method="POST">
+  <p>
+    <label for="NasAssigner">NAS du jury à assigner : </label>
+    <SELECT name = "NasAssigner" size="1">
+    <%
+    	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+    	ArrayList<TupleJury> list = gestionInterrogation.getGestionJury().affichage();
+
+    	for (int i = 0; i < list.size(); i++)
+    	{
+    %>
+    	<OPTION> <%= list.get(i).getNas() %> </OPTION>
+
+    <% } %>
+		</SELECT>
+
+    <label for="ProcesAssigner">au procès numéro</label>
+    <SELECT name = "ProcesAssigner" size="1">
+    <%
+    	ArrayList<TupleProces> listProces = gestionInterrogation.getGestionProces().retourneAllNonTermine();
+
+    	for (int i = 0; i < listProces.size(); i++)
+    	{
+    %>
+    	<OPTION> <%= listProces.get(i).getId() %> </OPTION>
+
+    <% } %>
+		</SELECT>
+	</p>
+  	<input type="submit" name="Assigner" value="Assigner">
+</form>
 
 
 
+<H3>Liste des juges actifs et disponibles</H3>
 
+<TABLE BORDER=1 WIDTH=600>
 
+<TR>
+<TH>NAS</TH>
+<TH>Prenom</TH>
+<TH>Nom</TH>
+<TH>Sexe</TH>
+<TH>Age</TH>
+<TH>Num. Procès</TH>
+</TR>
 
+<%
+	for (int i = 0 ; i < list.size(); i++)
+	{
+%>
+<TR>
+		<TD><%= list.get(i).getNas() %></TD>
+		<TD><%= list.get(i).getPrenom() %></TD>
+		<TD><%= list.get(i).getNom() %></TD>
+    <TD><%= list.get(i).getSexe() %></TD>
+		<TD><%= list.get(i).getAge() %></TD>
+    <TD><%= list.get(i).getProces_id() %></TD>
+</TR>
+<% } %>
+
+</TABLE>
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>
 <jsp:include page="/WEB-INF/messageErreur.jsp" />
 <BR>

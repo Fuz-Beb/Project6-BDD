@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,java.text.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,java.text.*,Justice.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -80,10 +80,19 @@ CONTENT="Gestion des jurys">
   <p>
     <label for="NasAssigner">NAS du jury à assigner : </label>
     <SELECT name = "NasAssigner" size="1">
-      <%-- TO DO --%>
-		</SELECT>
+    <%
+    	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+    	ArrayList<TupleJury> list = gestionInterrogation.getGestionJury().affichage();
 
-    <label for="ProcesId">au procès numéro</label>
+    	for (int i = 0; i < list.size(); i++)
+    	{
+    %>
+    	<OPTION> <%= list.get(i).getNas() %> </OPTION>
+
+    <% } %>
+    		</SELECT>
+
+    <label for="ProcesAssigner">au procès numéro</label>
     <SELECT name = "ProcesAssigner" size="1">
       <%-- TO DO --%>
 		</SELECT>

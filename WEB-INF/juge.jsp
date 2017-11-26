@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,java.text.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,java.text.*,Justice.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -25,10 +25,43 @@ CONTENT="Gestion des juges">
 	</tr>
 	<tr>
 		<form action="Juge" method="POST">
-			<td> <input type="text" name="id"/> </td>
-			<td> <input type="text" name="prenom"/></td>
-			<td><input type="text" name="nom"/></td>
-			<td><input type="text" name="sexe"/></td>
+<%			if (request.getParameter("id") != null)
+			{ %>
+				<td> <input type="text" name="id" value='<%= request.getParameter("id") %>' /> </td>
+			<%}
+			else
+			{ %>
+				<td> <input type="text" name="id" value="" /> </td>
+			<%}
+
+			if (request.getParameter("prenom") != null)
+			{ %>
+				<td> <input type="text" name="prenom" value='<%= request.getParameter("prenom") %>' /> </td>
+			<%}
+			else
+			{ %>
+				<td> <input type="text" name="prenom" value="" /> </td>
+			<%}
+			
+			if (request.getParameter("nom") != null)
+			{ %>
+				<td> <input type="text" name="nom" value='<%= request.getParameter("nom") %>' /> </td>
+			<%}
+			else
+			{ %>
+				<td> <input type="text" name="nom" value="" /> </td>
+			<%}
+
+			if (request.getParameter("age") != null)
+			{ %>
+				<td> <input type="text" name="age" value='<%= request.getParameter("age") %>' /> </td>
+			<%}
+			else
+			{ %>
+				<td> <input type="text" name="age" value="" /> </td>
+			<%}
+			%>
+
 			<td><input type="submit" name="Valider" value="Ajouter"></td>
 		</form>
 	</tr>
@@ -36,13 +69,18 @@ CONTENT="Gestion des juges">
 <H3>Suppression</H3>
 <form action="Juge" method="POST">
 	<p>
-		<label for="id">Id du juge à supprimer : </label>
-		<SELECT name="id" size="1">
-			<OPTION>lundi
-			<OPTION>mardi
-			<OPTION>mercredi
-			<OPTION>jeudi
-			<OPTION>vendredi
+		<label for="IdASupprimer">Id du juge à supprimer : </label>
+		<SELECT name="IdASupprimer" size="1">
+<%
+	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+	ArrayList<TupleJuge> list = gestionInterrogation.getGestionJuge().affichage();
+
+	for (int i = 0; i < list.size(); i++)
+	{
+%>
+	<OPTION> <%= list.get(i).getId() %> </OPTION>
+
+<% } %>
 		</SELECT>
 	</p>
 	<input type="submit" name="Supprimer" value="Supprimer">
@@ -58,12 +96,17 @@ CONTENT="Gestion des juges">
 <TH>Age</TH>
 </TR>
 
+<%
+	for (int i = 0 ; i < list.size(); i++)
+	{
+%>
 <TR>
-<TD>Un id</TD>
-<TD>Un prenom</TD>
-<TD>Un nom</TD>
-<TD>Un age</TD>
+		<TD><%= list.get(i).getId() %></TD>
+		<TD><%= list.get(i).getPrenom() %></TD>
+		<TD><%= list.get(i).getNom() %></TD>
+		<TD><%= list.get(i).getAge() %></TD>
 </TR>
+<% } %>
 
 </TABLE>
 

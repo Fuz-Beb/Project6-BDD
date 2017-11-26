@@ -67,7 +67,7 @@ public class Avocat extends HttpServlet
                         gestionUpdate.getGestionAvocat().ajouter(new TupleAvocat(id, prenom, nom, type));
                     }
                 }
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jury.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/avocat.jsp");
                 dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
@@ -76,7 +76,7 @@ public class Avocat extends HttpServlet
                 List<String> listeMessageErreur = new LinkedList<String>();
                 listeMessageErreur.add(e.getMessage());
                 request.setAttribute("listeMessageErreur", listeMessageErreur);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jury.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/avocat.jsp");
                 dispatcher.forward(request, response);
             }
             catch (Exception e)

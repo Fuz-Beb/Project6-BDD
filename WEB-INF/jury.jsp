@@ -96,8 +96,8 @@ CONTENT="Gestion des jurys">
 
     	for (int i = 0; i < list.size(); i++)
     	{
-    %>
-    	<OPTION> <%= list.get(i).getNas() %> </OPTION>
+        %>
+        <OPTION> <%= list.get(i).getNas() %> </OPTION>
 
     <% } %>
 		</SELECT>

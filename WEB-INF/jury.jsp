@@ -25,9 +25,9 @@ CONTENT="Gestion des jurys">
 	</tr>
   <tr>
     <form action="Jury" method="POST">
-<%    if (request.getParameter("id") != null)
+<%    if (request.getParameter("nas") != null)
     { %>
-      <td> <input type="text" name="nas" value='<%= request.getParameter("id") %>' /> </td>
+      <td> <input type="text" name="nas" value='<%= request.getParameter("nas") %>' /> </td>
     <%}
     else
     { %>

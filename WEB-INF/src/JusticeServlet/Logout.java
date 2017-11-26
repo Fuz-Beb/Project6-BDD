@@ -16,7 +16,6 @@ public class Logout extends HttpServlet
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        System.out.println("Procédure de déconnection");
         // Fermer la connexion à la base de donnée
         GestionJustice justiceUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
 
@@ -26,7 +25,6 @@ public class Logout extends HttpServlet
         }
         catch (SQLException e)
         {
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             List<String> listeMessageErreur = new LinkedList<String>();
             listeMessageErreur.add("Erreur dans la déconnection à la base de données");
             listeMessageErreur.add(e.toString());

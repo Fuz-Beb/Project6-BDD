@@ -63,6 +63,12 @@ public class Login extends HttpServlet
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                 dispatcher.forward(request, response);
                 session.setAttribute("etat", JusticeConstantes.CONNECTE);
+                
+                if (request.getServletPath().equals("Juge"))
+                {
+                    dispatcher = request.getRequestDispatcher("/WEB-INF/juge.jsp");
+                    dispatcher.forward(request, response);
+                }
             }
             else
             {

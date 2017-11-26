@@ -12,17 +12,19 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
 <BODY>
 <CENTER>
 <H1>Système de gestion d'un palais de justice</H1>
-<a href="Proces">Gestion proces</a> <br><br>
-<a href="Jury">Gestion jury</a> <br><br>
-<a href="Juge">Gestion juge</a> <br><br>
-<a href="Session">Gestion session</a> <br><br>
-<a href="Partie">Gestion partie</a> <br><br>
-<a href="Avocat">Gestion avocat</a> <br><br>
-
+<H2>Accueil</H2><br><br>
+<FORM ACTION="Accueil" METHOD="POST">
+    <INPUT TYPE="SUBMIT" NAME="proces"  VALUE="Gestion des proces"> </INPUT>
+    <INPUT TYPE="SUBMIT" NAME="jury"  VALUE="Gestion des jurys"> </INPUT>
+    <INPUT TYPE="SUBMIT" NAME="juge"  VALUE="Gestion des juges"> </INPUT>
+    <INPUT TYPE="SUBMIT" NAME="session"  VALUE="Gestion des sessions"> </INPUT>
+    <INPUT TYPE="SUBMIT" NAME="partie"  VALUE="Gestion des parties"> </INPUT>
+    <INPUT TYPE="SUBMIT" NAME="avocat"  VALUE="Gestion des avocats"> </INPUT>
+</FORM>
+<br><br>
 <H3>Liste des juges actifs et disponibles</H3>
 
 <TABLE BORDER=1 WIDTH=600>
-
 <TR>
 <TH>Identifiant</TH>
 <TH>Prenom</TH>

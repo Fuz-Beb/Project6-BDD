@@ -12,6 +12,7 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
 <BODY>
 <CENTER>
 <H1>Système de gestion d'un palais de justice</H1>
+<H2>Login</H2>
 <FORM ACTION="Login" METHOD="POST">
     <BR>
     <BR>

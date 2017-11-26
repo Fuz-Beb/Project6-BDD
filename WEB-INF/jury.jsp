@@ -63,7 +63,12 @@ CONTENT="Gestion des jurys">
     <%}
     else
     { %>
-      <td> <input type="text" name="sexe" value="" /> </td>
+      <td>
+        <SELECT name = "sexe" size="1">
+          <OPTION> M </OPTION>
+          <OPTION> F </OPTION>
+        </SELECT>
+      </td>
     <%}
 
     if (request.getParameter("age") != null)

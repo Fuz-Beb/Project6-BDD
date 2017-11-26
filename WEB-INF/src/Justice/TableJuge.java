@@ -112,7 +112,7 @@ public class TableJuge
     }
 
     /**
-     * Retourne la liste des juges qui sont toujours actifs
+     * Retourne la liste des juges
      * 
      * @return
      * @throws SQLException

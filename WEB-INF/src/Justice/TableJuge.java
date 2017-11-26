@@ -114,7 +114,7 @@ public class TableJuge
     /**
      * Retourne la liste des juges
      * 
-     * @return
+     * @return ArrayList<TupleJuge>
      * @throws SQLException
      * @throws IFT287Exception
      */

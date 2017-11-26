@@ -58,7 +58,7 @@ public class Avocat extends HttpServlet
                     catch (NumberFormatException e)
                     {
                         e.printStackTrace();
-                        throw new IFT287Exception("Le format de l'id ou de l'age est incorrect");
+                        throw new IFT287Exception("Le format de l'id est incorrect");
                     }
                     
                     // Ajout du jury

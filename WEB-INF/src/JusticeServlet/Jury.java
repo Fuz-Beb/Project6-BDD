@@ -34,6 +34,7 @@ public class Jury extends HttpServlet
         }
         else
         {
+
             try
             {
                 // Si l'utilisateur souhaite ajouter un jury
@@ -50,7 +51,7 @@ public class Jury extends HttpServlet
                     
                     try
                     {
-                        nas = Integer.parseInt(request.getParameter("id"));
+                        nas = Integer.parseInt(request.getParameter("nas"));
                         prenom = request.getParameter("prenom");
                         nom = request.getParameter("nom");
                         sexe = request.getParameter("sexe");
@@ -58,6 +59,7 @@ public class Jury extends HttpServlet
                     }
                     catch (NumberFormatException e)
                     {
+                        e.printStackTrace();
                         throw new IFT287Exception("Le format de l'id ou de l'age est incorrect");
                     }
                     

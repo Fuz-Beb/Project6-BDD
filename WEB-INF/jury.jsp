@@ -52,16 +52,21 @@ CONTENT="Gestion des jurys">
       <td> <input type="text" name="nom" value="" /> </td>
     <%}
 
-    if (request.getParameter("Sexe") != null)
+    if (request.getParameter("sexe") != null)
     { %>
-      <td> <input type="text" name="sexe" value='<%= request.getParameter("sexe") %>' /> </td>
+      <td>
+        <SELECT name = "sexe" size="1">
+          <OPTION> M </OPTION>
+          <OPTION> F </OPTION>
+        </SELECT>
+      </td>
     <%}
     else
     { %>
       <td> <input type="text" name="sexe" value="" /> </td>
     <%}
 
-    if (request.getParameter("Age") != null)
+    if (request.getParameter("age") != null)
     { %>
       <td> <input type="text" name="age" value='<%= request.getParameter("age") %>' /> </td>
     <%}
@@ -90,11 +95,19 @@ CONTENT="Gestion des jurys">
     	<OPTION> <%= list.get(i).getNas() %> </OPTION>
 
     <% } %>
-    		</SELECT>
+		</SELECT>
 
     <label for="ProcesAssigner">au procès numéro</label>
     <SELECT name = "ProcesAssigner" size="1">
-      <%-- TO DO --%>
+    <%
+    	ArrayList<TupleProces> listProces = gestionInterrogation.getGestionProces().retourneAllNonTermine();
+
+    	for (int i = 0; i < listProces.size(); i++)
+    	{
+    %>
+    	<OPTION> <%= listProces.get(i).getId() %> </OPTION>
+
+    <% } %>
 		</SELECT>
 	</p>
   	<input type="submit" name="Assigner" value="Assigner">
@@ -115,7 +128,19 @@ CONTENT="Gestion des jurys">
 <TH>Num. Procès</TH>
 </TR>
 
-<%-- TO DO --%>
+<%
+	for (int i = 0 ; i < list.size(); i++)
+	{
+%>
+<TR>
+		<TD><%= list.get(i).getNas() %></TD>
+		<TD><%= list.get(i).getPrenom() %></TD>
+		<TD><%= list.get(i).getNom() %></TD>
+    <TD><%= list.get(i).getSexe() %></TD>
+		<TD><%= list.get(i).getAge() %></TD>
+    <TD><%= list.get(i).getProces_id() %></TD>
+</TR>
+<% } %>
 
 </TABLE>
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>

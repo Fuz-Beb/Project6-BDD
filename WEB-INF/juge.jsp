@@ -72,8 +72,8 @@ CONTENT="Gestion des juges">
 		<label for="IdASupprimer">Id du juge à supprimer : </label>
 		<SELECT name="IdASupprimer" size="1">
 <%
-	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
-	ArrayList<TupleJuge> list = gestionInterrogation.getGestionJuge().affichage();
+	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+	ArrayList<TupleJuge> list = justiceInterrogation.getGestionJuge().affichage();
 
 	for (int i = 0; i < list.size(); i++)
 	{

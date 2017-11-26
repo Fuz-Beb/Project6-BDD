@@ -63,10 +63,28 @@ public class GestionJuge
      */
     public ArrayList<TupleJuge> affichage() throws Exception
     {
+        ArrayList<TupleJuge> tupleJuge = null;
         try
         {
+            tupleJuge = juge.affichage();
             cx.commit();
-            return juge.affichage();
+            return tupleJuge;
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+    
+    public ArrayList<TupleJuge> affichageAll() throws Exception
+    {
+        ArrayList<TupleJuge> tupleJuge = null;
+        try
+        {
+            tupleJuge = juge.affichageAll();
+            cx.commit();
+            return tupleJuge;
         }
         catch (Exception e)
         {

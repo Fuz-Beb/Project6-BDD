@@ -13,6 +13,7 @@ public class TableJuge
     private static PreparedStatement stmtExiste;
     private static PreparedStatement stmtInsert;
     private static PreparedStatement stmtSelect;
+    private static PreparedStatement stmtSelectAll;
     private static PreparedStatement stmtRetirer;
     private static PreparedStatement stmtChangeDisponibilite;
     private Connexion cx;
@@ -28,6 +29,7 @@ public class TableJuge
     {
         this.cx = cx;
         stmtSelect = cx.getConnection().prepareStatement("select * from \"Juge\" where \"disponible\" = true");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Juge\" where \"quitterJustice\" = false");
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Juge\" where \"id\" = ?");
         stmtInsert = cx.getConnection()
                 .prepareStatement("insert into \"Juge\" (\"id\", \"prenom\", \"nom\", \"age\") values (?,?,?,?)");
@@ -106,6 +108,31 @@ public class TableJuge
             while (rset.next());
         }
         rset.close();
+        return listJuge;
+    }
+
+    /**
+     * Retourne la liste des juges qui sont toujours actifs
+     * 
+     * @return
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TupleJuge> affichageAll() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleJuge> listJuge = new ArrayList<TupleJuge>();
+        ResultSet rset = stmtSelectAll.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listJuge.add(getJuge(new TupleJuge(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
         return listJuge;
     }
 

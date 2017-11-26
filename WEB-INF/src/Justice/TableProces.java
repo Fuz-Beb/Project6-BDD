@@ -3,6 +3,7 @@ package Justice;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Permet d'effectuer les accès à la table proces.
@@ -17,6 +18,8 @@ public class TableProces
     private PreparedStatement stmtProcesJugeEnCours;
     private PreparedStatement stmtVerificationProcesDevantJury;
     private PreparedStatement stmtSelectJugeDansProces;
+    private PreparedStatement stmtSelectAllProcesNonTermine;
+    private PreparedStatement stmtSelectAll;
     private Connexion cx;
 
     /**
@@ -45,6 +48,9 @@ public class TableProces
                 .prepareStatement("select from \"Proces\" where \"id\" = ? and \"devantJury\" = 1");
         stmtSelectJugeDansProces = cx.getConnection()
                 .prepareStatement("select \"Juge_id\" from \"Proces\" where \"id\" = ?");
+        stmtSelectAllProcesNonTermine = cx.getConnection()
+                .prepareStatement("select * from \"Proces\" where \"decision\" is null and \"date\" < current_date");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Proces\"");
     }
 
     /**
@@ -245,5 +251,55 @@ public class TableProces
         boolean devantJury = rset.next();
         rset.close();
         return devantJury;
+    }
+
+    /**
+     * Retourne l'ensemble des proces terminables
+     * 
+     * @return ArrayList<TupleProces>
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TupleProces> retourneAllNonTermine() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleProces> listProces = new ArrayList<TupleProces>();
+        ResultSet rset = stmtSelectAllProcesNonTermine.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listProces.add(getProces(new TupleProces(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
+        return listProces;
+    }
+
+    /**
+     * Retourne l'ensemble des proces
+     * 
+     * @return ArrayList<TupleProces>
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TupleProces> retourneAll() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleProces> listProces = new ArrayList<TupleProces>();
+        ResultSet rset = stmtSelectAll.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listProces.add(getProces(new TupleProces(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
+        return listProces;
     }
 }

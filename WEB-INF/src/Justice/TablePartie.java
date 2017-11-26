@@ -3,6 +3,7 @@ package Justice;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Permet d'effectuer les accès à la table partie.
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 public class TablePartie
 {
     private PreparedStatement stmtExistePartie;
+    private PreparedStatement stmtRetourneAllPartie;
     private PreparedStatement stmtInsertPartie;
     private Connexion cx;
 
@@ -24,6 +26,7 @@ public class TablePartie
     {
         this.cx = cx;
         stmtExistePartie = cx.getConnection().prepareStatement("select * from \"Partie\" where \"id\" = ?");
+        stmtRetourneAllPartie = cx.getConnection().prepareStatement("select * from \"Partie\"");
         stmtInsertPartie = cx.getConnection().prepareStatement(
                 "insert into \"Partie\" (\"id\", \"prenom\", \"nom\", \"Avocat_id\") values (?,?,?,?)");
     }
@@ -36,6 +39,26 @@ public class TablePartie
     public Connexion getConnexion()
     {
         return cx;
+    }
+
+    /**
+     * Objet juge associé à un partie de la base de données
+     * 
+     * @param tuplePartie
+     * @return TuplePartie
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public TuplePartie getPartie(TuplePartie tuplePartie) throws SQLException, IFT287Exception
+    {
+        stmtExistePartie.setInt(1, tuplePartie.getId());
+        ResultSet rset = stmtExistePartie.executeQuery();
+
+        if (rset.next())
+            tuplePartie = new TuplePartie(tuplePartie.getId(), rset.getString(2), rset.getString(3), rset.getInt(4));
+
+        rset.close();
+        return tuplePartie;
     }
 
     /**
@@ -68,5 +91,30 @@ public class TablePartie
         stmtInsertPartie.setString(3, tuplePartie.getNom());
         stmtInsertPartie.setInt(4, tuplePartie.getAvocat_id());
         stmtInsertPartie.executeUpdate();
+    }
+
+    /**
+     * Retourne toutes les parties de la base de données
+     * 
+     * @return ArrayList<TupleParie>
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TuplePartie> retourneAll() throws SQLException, IFT287Exception
+    {
+        ArrayList<TuplePartie> listPartie = new ArrayList<TuplePartie>();
+        ResultSet rset = stmtRetourneAllPartie.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listPartie.add(getPartie(new TuplePartie(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
+        return listPartie;
     }
 }

@@ -1,5 +1,8 @@
 package Justice;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 /**
  * Gestion des transactions de la table proces
  */
@@ -145,6 +148,56 @@ public class GestionProces
             // Rendre le juge non disponible
             juge.changerDisponibilite(false, new TupleJuge(tupleProces.getJuge_id()));
             cx.commit();
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+
+    /**
+     * Retourne l'ensemble des proces terminables
+     * 
+     * @return ArrayList<TupleProces>
+     * @throws Exception
+     */
+    public ArrayList<TupleProces> retourneAllNonTermine() throws Exception
+    {
+        ArrayList<TupleProces> tupleProces = null;
+
+        try
+        {
+            tupleProces = proces.retourneAllNonTermine();
+
+            cx.commit();
+
+            return tupleProces;
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+
+    /**
+     * Retourne l'ensemble des proces
+     * 
+     * @return ArrayList<TupleProces>
+     * @throws Exception
+     */
+    public ArrayList<TupleProces> retourneAll() throws Exception
+    {
+        ArrayList<TupleProces> tupleProces = null;
+
+        try
+        {
+            tupleProces = proces.retourneAll();
+
+            cx.commit();
+
+            return tupleProces;
         }
         catch (Exception e)
         {

@@ -1,6 +1,7 @@
 package Justice;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Gestion des transactions de la table partie.
@@ -54,6 +55,20 @@ public class GestionPartie
 
             // Commit
             cx.commit();
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+
+    public ArrayList<TuplePartie> retourneAll() throws Exception
+    {
+        try
+        {
+            cx.commit();
+            return partie.retourneAll();
         }
         catch (Exception e)
         {

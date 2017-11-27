@@ -1,5 +1,7 @@
 package Justice;
 
+import java.util.ArrayList;
+
 /**
  * Gestion des transactions de la table avocat.
  */
@@ -36,6 +38,32 @@ public class GestionAvocat
             avocat.ajouter(tupleAvocat);
 
             cx.commit();
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+    
+    /**
+     * Afficher la liste des avocats
+     * 
+     * @return ArrayList<TupleJury>
+     *
+     * @throws Exception
+     */
+    public ArrayList<TupleAvocat> affichage() throws Exception
+    {
+        ArrayList<TupleAvocat> tupleAvocat = null;
+
+        try
+        {
+            tupleAvocat = avocat.affichage();
+
+            cx.commit();
+
+            return tupleAvocat;
         }
         catch (Exception e)
         {

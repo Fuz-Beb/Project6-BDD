@@ -3,6 +3,7 @@ package Justice;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Permet d'effectuer les accès à la table avocat.
@@ -11,7 +12,9 @@ public class TableAvocat
 {
     private static PreparedStatement stmtExiste;
     private static PreparedStatement stmtInsert;
+    private static PreparedStatement stmtSelectAll;
     private Connexion cx;
+
 
     /**
      * Création d'une instance. Des énoncés SQL pour chaque requête sont
@@ -26,6 +29,7 @@ public class TableAvocat
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Avocat\" where \"id\" = ?");
         stmtInsert = cx.getConnection()
                 .prepareStatement("insert into \"Avocat\" (id, prenom, nom, type) values (?,?,?,?)");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Avocat\"");
     }
 
     /**
@@ -41,7 +45,7 @@ public class TableAvocat
     /**
      * Vérifie si l'avocat existe
      * 
-     * @param tupleAvocat 
+     * @param tupleAvocat
      * @return boolean
      * @throws SQLException
      */
@@ -67,5 +71,50 @@ public class TableAvocat
         stmtInsert.setString(3, tupleAvocat.getNom());
         stmtInsert.setInt(4, tupleAvocat.getType());
         stmtInsert.executeUpdate();
+    }
+
+    /**
+     * Retourne la liste des avocats
+     * 
+     * @return ArrayList<TupleAvocat>
+     * @throws SQLException 
+     * @throws IFT287Exception 
+     */
+    public ArrayList<TupleAvocat> affichage() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleAvocat> listAvocat = new ArrayList<TupleAvocat>();
+        ResultSet rset = stmtSelectAll.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listAvocat.add(getAvocat(new TupleAvocat(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
+        return listAvocat;
+    }
+
+    /**
+     * Objet avocat associé à un avocat de la base de données
+     * 
+     * @param tupleAvocat
+     * @return TupleAvocat
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    private TupleAvocat getAvocat(TupleAvocat tupleAvocat) throws SQLException, IFT287Exception
+    {
+        stmtExiste.setInt(1, tupleAvocat.getId());
+        ResultSet rset = stmtExiste.executeQuery();
+
+        if (rset.next())
+            tupleAvocat = new TupleAvocat(tupleAvocat.getId(), rset.getString(2), rset.getString(3), rset.getInt(4));
+
+        rset.close();
+        return tupleAvocat;
     }
 }

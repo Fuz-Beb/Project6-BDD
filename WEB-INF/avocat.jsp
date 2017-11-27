@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,java.text.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,java.text.*,Justice.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -75,6 +75,33 @@ CONTENT="Gestion des avocats">
     </form>
   </tr>
 </table>
+
+<H3>Liste des avocats</H3>
+
+<TABLE BORDER=1 WIDTH=600>
+
+<TR>
+<TH>Identifiant</TH>
+<TH>Prenom</TH>
+<TH>Nom</TH>
+<TH>Type</TH>
+</TR>
+
+<%
+GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();
+	for (int i = 0 ; i < list.size(); i++)
+	{
+    %>
+    <TR>
+    		<TD><%= list.get(i).getId() %></TD>
+    		<TD><%= list.get(i).getPrenom() %></TD>
+    		<TD><%= list.get(i).getNom() %></TD>
+    		<TD><%= list.get(i).getType() %></TD>
+    </TR>
+<% } %>
+
+</TABLE>
 
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>
 <jsp:include page="/WEB-INF/messageErreur.jsp" />

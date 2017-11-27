@@ -45,7 +45,7 @@ CONTENT="Gestion des juges">
 			{ %>
 				<td> <input type="text" name="prenom" value="" /> </td>
 			<%}
-			
+
 			if (request.getParameter("nom") != null)
 			{ %>
 				<td> <input type="text" name="nom" value='<%= request.getParameter("nom") %>' /> </td>
@@ -69,10 +69,10 @@ CONTENT="Gestion des juges">
 		</form>
 	</tr>
 </table>
-<H3>Suppression</H3>
+<H3>Rendre indisponible un juge</H3>
 <form action="Juge" method="POST">
 	<p>
-		<label for="IdASupprimer">Id du juge à supprimer : </label>
+		<label for="IdASupprimer">Id du juge à changer : </label>
 		<SELECT name="IdASupprimer" size="1">
 <%
 	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");

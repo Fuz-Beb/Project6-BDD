@@ -1,4 +1,4 @@
-<%@ page import="java.util.*,java.text.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*,java.text.*,Justice.*" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -32,12 +32,20 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
 <TH>Age</TH>
 </TR>
 
+<%
+  GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+  ArrayList<TupleJuge> listJuge = gestionInterrogation.getGestionJuge().affichage();
+
+	for (int i = 0 ; i < listJuge.size(); i++)
+	{
+%>
 <TR>
-<TD>Un id</TD>
-<TD>Un prenom</TD>
-<TD>Un nom</TD>
-<TD>Un age</TD>
+		<TD><%= listJuge.get(i).getId() %></TD>
+		<TD><%= listJuge.get(i).getPrenom() %></TD>
+		<TD><%= listJuge.get(i).getNom() %></TD>
+		<TD><%= listJuge.get(i).getAge() %></TD>
 </TR>
+<% } %>
 
 </TABLE>
 
@@ -51,15 +59,24 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
 <TH>Nom</TH>
 <TH>Sexe</TH>
 <TH>Age</TH>
+<TH>Num. Procès</TH>
 </TR>
 
+<%
+ArrayList<TupleJury> listJury = gestionInterrogation.getGestionJury().affichage();
+
+	for (int i = 0 ; i < listJury.size(); i++)
+	{
+%>
 <TR>
-<TD>Un id</TD>
-<TD>Un prenom</TD>
-<TD>Un nom</TD>
-<TD>Un sexe</TD>
-<TD>Un age</TD>
+		<TD><%= listJury.get(i).getNas() %></TD>
+		<TD><%= listJury.get(i).getPrenom() %></TD>
+		<TD><%= listJury.get(i).getNom() %></TD>
+    <TD><%= listJury.get(i).getSexe() %></TD>
+		<TD><%= listJury.get(i).getAge() %></TD>
+    <TD><%= listJury.get(i).getProces_id() %></TD>
 </TR>
+<% } %>
 
 </TABLE>
 </CENTER>

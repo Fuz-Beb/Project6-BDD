@@ -22,7 +22,7 @@ public class Avocat extends HttpServlet
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         GestionJustice gestionUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
-        
+
         // Vérification de l'état de la session
         HttpSession session = request.getSession();
         Integer etat = (Integer) session.getAttribute("etat");
@@ -33,7 +33,7 @@ public class Avocat extends HttpServlet
         }
         else
         {
-            
+
             try
             {
                 // Si l'utilisateur souhaite ajouter un avocat
@@ -41,13 +41,14 @@ public class Avocat extends HttpServlet
                 {
                     Integer id, type;
                     String prenom, nom;
-                
+
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("id").equals("") || request.getParameter("prenom").equals("") || request.getParameter("nom").equals("") || request.getParameter("type").equals(""))
+                    if (request.getParameter("id").equals("") || request.getParameter("prenom").equals("")
+                            || request.getParameter("nom").equals("") || request.getParameter("type").equals(""))
                     {
                         throw new IFT287Exception("Les champs ne doivent pas être vides.");
                     }
-                    
+
                     try
                     {
                         id = Integer.parseInt(request.getParameter("id"));
@@ -60,13 +61,19 @@ public class Avocat extends HttpServlet
                         e.printStackTrace();
                         throw new IFT287Exception("Le format de l'id est incorrect");
                     }
-                    
+
                     // Ajout du jury
                     synchronized (gestionUpdate)
                     {
                         gestionUpdate.getGestionAvocat().ajouter(new TupleAvocat(id, prenom, nom, type));
                     }
                 }
+                else if (request.getParameter("param") != null)
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+                    dispatcher.forward(request, response);
+                }
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/avocat.jsp");
                 dispatcher.forward(request, response);
             }

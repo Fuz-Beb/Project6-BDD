@@ -15,6 +15,9 @@ CONTENT="Gestion des juges">
 <H1>Système de gestion d'un palais de justice</H1>
 <H2>Gestion des juges</H2> <br>
 </CENTER>
+
+<br><a href="Juge?param=retour">Retour</a><br>
+
 <H3>Création</H3>
 <TABLE style="border: 1px solid #A4A4A4">
 	<tr>

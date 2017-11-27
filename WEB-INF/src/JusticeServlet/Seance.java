@@ -55,7 +55,7 @@ public class Seance extends HttpServlet
                     {
                         id = Integer.parseInt(request.getParameter("id"));
                         proces_id = Integer.parseInt(request.getParameter("selectProces"));
-      
+
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                         dateFormat.setLenient(false);
 
@@ -86,6 +86,12 @@ public class Seance extends HttpServlet
                         }
                     }
                 }
+                else if (request.getParameter("param") != null)
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+                    dispatcher.forward(request, response);
+                }
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/seance.jsp");
                 dispatcher.forward(request, response);
             }

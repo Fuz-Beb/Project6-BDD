@@ -15,6 +15,9 @@ CONTENT="Gestion des sessions">
 <H1>Système de gestion d'un palais de justice</H1>
 <H2>Gestion des séances</H2><br>
 </CENTER>
+
+<br><a href="Seance?param=retour">Retour</a><br>
+
 <H3>Création</H3>
 <%	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
 	ArrayList<TupleProces> listProces = justiceInterrogation.getGestionProces().retourneAllDecisionNull();

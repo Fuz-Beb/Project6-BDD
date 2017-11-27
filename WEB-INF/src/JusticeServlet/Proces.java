@@ -101,6 +101,11 @@ public class Proces extends HttpServlet
                         }
                     }
                 }
+                else if (request.getParameter("param") != null)
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+                    dispatcher.forward(request, response);   
+                }
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/proces.jsp");
                 dispatcher.forward(request, response);

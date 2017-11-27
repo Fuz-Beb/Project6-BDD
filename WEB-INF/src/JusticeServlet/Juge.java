@@ -79,6 +79,12 @@ public class Juge extends HttpServlet
                         }
                     }
                 }
+                else if (request.getParameter("param") != null)
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+                    dispatcher.forward(request, response);
+                }
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/juge.jsp");
                 dispatcher.forward(request, response);
             }

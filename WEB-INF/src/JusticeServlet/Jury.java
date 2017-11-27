@@ -23,7 +23,7 @@ public class Jury extends HttpServlet
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         GestionJustice gestionUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
-        
+
         // Vérification de l'état de la session
         HttpSession session = request.getSession();
         Integer etat = (Integer) session.getAttribute("etat");
@@ -42,13 +42,14 @@ public class Jury extends HttpServlet
                 {
                     Integer nas, age;
                     String prenom, nom, sexe;
-                    
+
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("nas").equals("") || request.getParameter("prenom").equals("") || request.getParameter("nom").equals("") || request.getParameter("sexe").equals(""))
+                    if (request.getParameter("nas").equals("") || request.getParameter("prenom").equals("")
+                            || request.getParameter("nom").equals("") || request.getParameter("sexe").equals(""))
                     {
                         throw new IFT287Exception("Les champs ne doivent pas être vides.");
                     }
-                    
+
                     try
                     {
                         nas = Integer.parseInt(request.getParameter("nas"));
@@ -62,7 +63,7 @@ public class Jury extends HttpServlet
                         e.printStackTrace();
                         throw new IFT287Exception("Le format de l'id ou de l'age est incorrect");
                     }
-                    
+
                     // Ajout du jury
                     synchronized (gestionUpdate)
                     {
@@ -79,11 +80,19 @@ public class Jury extends HttpServlet
                             // Assigner le jury
                             synchronized (gestionUpdate)
                             {
-                                gestionUpdate.getGestionJury().assignerProces(new TupleJury(Integer.parseInt(request.getParameter("NasAssigner"))), new TupleProces(Integer.parseInt(request.getParameter("ProcesAssigner"))));
-                            }    
+                                gestionUpdate.getGestionJury().assignerProces(
+                                        new TupleJury(Integer.parseInt(request.getParameter("NasAssigner"))),
+                                        new TupleProces(Integer.parseInt(request.getParameter("ProcesAssigner"))));
+                            }
                         }
                     }
                 }
+                else if (request.getParameter("param") != null)
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+                    dispatcher.forward(request, response);
+                }
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jury.jsp");
                 dispatcher.forward(request, response);
             }

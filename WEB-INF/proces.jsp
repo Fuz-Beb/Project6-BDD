@@ -15,6 +15,9 @@ CONTENT="Gestion des proces">
 <H1>Système de gestion d'un palais de justice</H1>
 <H2>Gestion des proces</H2> <br>
 </CENTER>
+
+<br><a href="Proces?param=retour">Retour</a><br>
+
 <H3>Création</H3>
 
 <%	List<String> listeMessageErreur = new LinkedList<String>();

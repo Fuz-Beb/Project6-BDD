@@ -2,6 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
+<link rel="stylesheet" type="text/css" href="style.css">
 <TITLE>IFT287 - Système de gestion d'un palais de justice</TITLE>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 <META NAME="author" CONTENT="Pierrick BOBET">
@@ -14,6 +15,8 @@ CONTENT="Gestion des avocats">
 <H1>Système de gestion d'un palais de justice</H1>
 <H2>Gestion des avocats</H2>
 </CENTER>
+
+<br><a href="Avocat?param=retour">Retour</a><br>
 
 <H3>Création</H3>
 <TABLE style="border: 1px solid #A4A4A4">

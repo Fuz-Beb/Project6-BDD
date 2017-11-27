@@ -22,7 +22,7 @@ public class Partie extends HttpServlet
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         GestionJustice gestionUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
-        
+
         // Vérification de l'état de la session
         HttpSession session = request.getSession();
         Integer etat = (Integer) session.getAttribute("etat");
@@ -33,7 +33,7 @@ public class Partie extends HttpServlet
         }
         else
         {
-            
+
             try
             {
                 // Si l'utilisateur souhaite ajouter un avocat
@@ -41,13 +41,14 @@ public class Partie extends HttpServlet
                 {
                     Integer id, avocat_id;
                     String prenom, nom;
-                
+
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("id").equals("") || request.getParameter("prenom").equals("") || request.getParameter("nom").equals("") || request.getParameter("avocat_id").equals(""))
+                    if (request.getParameter("id").equals("") || request.getParameter("prenom").equals("")
+                            || request.getParameter("nom").equals("") || request.getParameter("avocat_id").equals(""))
                     {
                         throw new IFT287Exception("Les champs ne doivent pas être vides.");
                     }
-                    
+
                     try
                     {
                         id = Integer.parseInt(request.getParameter("id"));
@@ -60,13 +61,19 @@ public class Partie extends HttpServlet
                         e.printStackTrace();
                         throw new IFT287Exception("Le format de l'id ou de l'id avocat est incorrect");
                     }
-                    
+
                     // Ajout du jury
                     synchronized (gestionUpdate)
                     {
                         gestionUpdate.getGestionPartie().ajout(new TuplePartie(id, prenom, nom, avocat_id));
                     }
                 }
+                else if (request.getParameter("param") != null)
+                {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
+                    dispatcher.forward(request, response);
+                }
+
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/partie.jsp");
                 dispatcher.forward(request, response);
             }

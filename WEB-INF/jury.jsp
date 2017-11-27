@@ -120,7 +120,7 @@ CONTENT="Gestion des jurys">
 
 
 
-<H3>Liste des juges actifs et disponibles</H3>
+<H3>Liste des jurys disponibles</H3>
 
 <TABLE BORDER=1 WIDTH=600>
 

@@ -69,7 +69,7 @@ CONTENT="Gestion des séances">
 <H3>Suppression</H3>
 <form action="Seance" method="POST">
 	<p>
-		<label for="IdASupprimer">Id des séances à supprimer : </label>
+		<label for="IdASupprimer">Id de la séance à supprimer : </label>
 		<SELECT name="IdASupprimer" size="1">
 <%
 		for (int i = 0; i < listSeance.size(); i++)

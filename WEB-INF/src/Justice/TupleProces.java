@@ -17,7 +17,7 @@ public class TupleProces
     private int devantJury;
     private int partieDefenderesse_id;
     private int partiePoursuivant_id;
-    private int decision;
+    private int decision = -1;
 
     /**
      * Constructeur par défaut

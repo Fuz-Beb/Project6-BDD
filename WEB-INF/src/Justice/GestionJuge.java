@@ -77,6 +77,11 @@ public class GestionJuge
         }
     }
     
+    /**
+     * Retourne l'ensemble des juges
+     * @return ArrayList<TupleJuge>
+     * @throws Exception
+     */
     public ArrayList<TupleJuge> affichageAll() throws Exception
     {
         ArrayList<TupleJuge> tupleJuge = null;

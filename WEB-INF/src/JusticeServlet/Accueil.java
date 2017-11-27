@@ -51,7 +51,7 @@ public class Accueil extends HttpServlet
             }
             else if (request.getParameter("session") != null)
             {
-                dispatcher = request.getRequestDispatcher("/WEB-INF/session.jsp");
+                dispatcher = request.getRequestDispatcher("/WEB-INF/seance.jsp");
                 dispatcher.forward(request, response);
             }
             else if (request.getParameter("partie") != null)

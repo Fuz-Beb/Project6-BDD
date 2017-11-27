@@ -205,4 +205,29 @@ public class GestionProces
             throw e;
         }
     }
+
+    /**
+     * Retourne l'ensemble des proces avec des decisions nuls
+     * 
+     * @return ArrayList<TupleProces>
+     * @throws Exception
+     */
+    public ArrayList<TupleProces> retourneAllDecisionNull() throws Exception
+    {
+        ArrayList<TupleProces> tupleProces = null;
+
+        try
+        {
+            tupleProces = proces.retourneAllDecisionNull();
+
+            cx.commit();
+
+            return tupleProces;
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
 }

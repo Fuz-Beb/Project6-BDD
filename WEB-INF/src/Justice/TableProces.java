@@ -20,6 +20,8 @@ public class TableProces
     private PreparedStatement stmtSelectJugeDansProces;
     private PreparedStatement stmtSelectAllProcesNonTermine;
     private PreparedStatement stmtSelectAll;
+    private PreparedStatement stmtSelectAllDecisionNull;
+
     private Connexion cx;
 
     /**
@@ -51,6 +53,8 @@ public class TableProces
         stmtSelectAllProcesNonTermine = cx.getConnection()
                 .prepareStatement("select * from \"Proces\" where \"decision\" is null and \"date\" < current_date");
         stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Proces\"");
+        stmtSelectAllDecisionNull = cx.getConnection()
+                .prepareStatement("select * from \"Proces\" where \"decision\" is null");
     }
 
     /**
@@ -289,6 +293,31 @@ public class TableProces
     {
         ArrayList<TupleProces> listProces = new ArrayList<TupleProces>();
         ResultSet rset = stmtSelectAll.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listProces.add(getProces(new TupleProces(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
+        return listProces;
+    }
+
+    /**
+     * Retourne l'ensemble des proces avec des decision nuls
+     * 
+     * @return ArrayList<TupleProces>
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TupleProces> retourneAllDecisionNull() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleProces> listProces = new ArrayList<TupleProces>();
+        ResultSet rset = stmtSelectAllDecisionNull.executeQuery();
 
         if (rset.next())
         {

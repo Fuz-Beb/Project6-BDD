@@ -1,6 +1,8 @@
 package JusticeServlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,8 +16,9 @@ import javax.servlet.http.HttpSession;
 import Justice.GestionJustice;
 import Justice.IFT287Exception;
 import Justice.TupleJuge;
+import Justice.TupleSeance;
 
-public class Juge extends HttpServlet
+public class Seance extends HttpServlet
 {
     private static final long serialVersionUID = 1L;
 
@@ -35,15 +38,15 @@ public class Juge extends HttpServlet
         {
             try
             {
-                // Si l'utilisateur souhaite ajouter un juge
+                // Si l'utilisateur souhaite ajouter une seance
                 if (request.getParameter("Valider") != null)
                 {
-                    Integer id, age;
-                    String prenom, nom;
+                    Integer id, proces_id;
+                    java.util.Date date;
+                    java.sql.Date dateSql;
 
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("id").equals("") || request.getParameter("prenom").equals("")
-                            || request.getParameter("nom").equals("") || request.getParameter("age").equals(""))
+                    if (request.getParameter("id").equals("") || request.getParameter("date").equals(""))
                     {
                         throw new IFT287Exception("Les champs ne doivent pas être vides.");
                     }
@@ -51,35 +54,39 @@ public class Juge extends HttpServlet
                     try
                     {
                         id = Integer.parseInt(request.getParameter("id"));
-                        prenom = request.getParameter("prenom");
-                        nom = request.getParameter("nom");
-                        age = Integer.parseInt(request.getParameter("age"));
+                        proces_id = Integer.parseInt(request.getParameter("selectProces"));
+      
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                        dateFormat.setLenient(false);
+
+                        date = (java.util.Date) dateFormat.parse(request.getParameter("date"));
+                        dateSql = new java.sql.Date(date.getTime());
                     }
-                    catch (NumberFormatException e)
+                    catch (NumberFormatException | ParseException e)
                     {
-                        throw new IFT287Exception("Le format de l'id ou de l'age est incorrect");
+                        throw new IFT287Exception("Le format de l'id ou de la date est incorrect");
                     }
 
-                    // Ajout du juge
+                    // Ajout de la seance
                     synchronized (justiceUpdate)
                     {
-                        justiceUpdate.getGestionJuge().ajouter(new TupleJuge(id, prenom, nom, age));
+                        justiceUpdate.getGestionSeance().ajout(new TupleSeance(id, proces_id, dateSql));
                     }
-                } // Si l'utilisateur souhaite supprimer un juge
+                } // Si l'utilisateur souhaite supprimer une seance
                 else if (request.getParameter("Supprimer") != null)
                 {
-                    // Si il reste des juges à supprimer
+                    // Si il reste des seances à supprimer
                     if (request.getParameter("IdASupprimer") != null)
                     {
-                        // Supprimer le juge
+                        // Supprimer la seance
                         synchronized (justiceUpdate)
                         {
-                            justiceUpdate.getGestionJuge()
-                                    .retirer(new TupleJuge(Integer.parseInt(request.getParameter("IdASupprimer"))));
+                            justiceUpdate.getGestionSeance()
+                                    .supprimer(new TupleSeance(Integer.parseInt(request.getParameter("IdASupprimer"))));
                         }
                     }
                 }
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/juge.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/seance.jsp");
                 dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
@@ -87,7 +94,7 @@ public class Juge extends HttpServlet
                 List<String> listeMessageErreur = new LinkedList<String>();
                 listeMessageErreur.add(e.getMessage());
                 request.setAttribute("listeMessageErreur", listeMessageErreur);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/juge.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/seance.jsp");
                 dispatcher.forward(request, response);
             }
             catch (Exception e)

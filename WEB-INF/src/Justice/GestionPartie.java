@@ -63,12 +63,20 @@ public class GestionPartie
         }
     }
 
+    /**
+     * Retourne l'ensemble des parties
+     * 
+     * @return ArrayList<TuplePartie>
+     * @throws Exception
+     */
     public ArrayList<TuplePartie> retourneAll() throws Exception
     {
+        ArrayList<TuplePartie> tuplePartie = null;
         try
         {
+            tuplePartie = partie.retourneAll();
             cx.commit();
-            return partie.retourneAll();
+            return tuplePartie;
         }
         catch (Exception e)
         {

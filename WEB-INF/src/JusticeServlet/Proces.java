@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 
 import Justice.GestionJustice;
 import Justice.IFT287Exception;
-import Justice.TupleJuge;
 import Justice.TupleProces;
 
 public class Proces extends HttpServlet
@@ -24,7 +23,7 @@ public class Proces extends HttpServlet
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        GestionJustice gestionUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
+        GestionJustice justiceUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
 
         // Vérification de l'état de la session
         HttpSession session = request.getSession();
@@ -46,14 +45,15 @@ public class Proces extends HttpServlet
                     java.sql.Date dateSql;
 
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("id").equals("") || request.getParameter("date").equals(""))
+                    if (request.getParameter("date").equals(""))
                     {
-                        throw new IFT287Exception("Les champs id et date ne doivent pas être vides.");
+                        throw new IFT287Exception("Le champ date ne doit pas être vide.");
                     }
 
                     try
                     {
-                        id = Integer.parseInt(request.getParameter("id"));
+                        id = justiceUpdate.getGestionProces().retourneAll()
+                                .get(justiceUpdate.getGestionProces().retourneAll().size() - 1).getId() + 1;
                         juge_id = Integer.parseInt(request.getParameter("selectJuge"));
                         partieD_id = Integer.parseInt(request.getParameter("selectPartieD"));
                         partieP_id = Integer.parseInt(request.getParameter("selectPartieP"));
@@ -67,7 +67,7 @@ public class Proces extends HttpServlet
                     }
                     catch (NumberFormatException | ParseException e)
                     {
-                        throw new IFT287Exception("Le format de l'id ou de la date est incorrect");
+                        throw new IFT287Exception("Le format de la date est incorrect");
                     }
 
                     if (request.getParameter("selectDevantJury").equals("Vrai"))
@@ -76,9 +76,9 @@ public class Proces extends HttpServlet
                         devantJury = 0;
 
                     // Ajout du proces
-                    synchronized (gestionUpdate)
+                    synchronized (justiceUpdate)
                     {
-                        gestionUpdate.getGestionProces()
+                        justiceUpdate.getGestionProces()
                                 .creer(new TupleProces(id, juge_id, dateSql, devantJury, partieD_id, partieP_id));
                     }
                 }
@@ -94,9 +94,9 @@ public class Proces extends HttpServlet
                         else
                             decision = 0;
 
-                        synchronized (gestionUpdate)
+                        synchronized (justiceUpdate)
                         {
-                            gestionUpdate.getGestionProces().terminer(
+                            justiceUpdate.getGestionProces().terminer(
                                     new TupleProces(Integer.parseInt(request.getParameter("IdATerminer"))), decision);
                         }
                     }
@@ -104,7 +104,7 @@ public class Proces extends HttpServlet
                 else if (request.getParameter("param") != null)
                 {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
-                    dispatcher.forward(request, response);   
+                    dispatcher.forward(request, response);
                 }
 
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/proces.jsp");

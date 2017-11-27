@@ -46,14 +46,15 @@ public class Seance extends HttpServlet
                     java.sql.Date dateSql;
 
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("id").equals("") || request.getParameter("date").equals(""))
+                    if (request.getParameter("date").equals(""))
                     {
-                        throw new IFT287Exception("Les champs ne doivent pas être vides.");
+                        throw new IFT287Exception("Le champ ne doit pas être vide.");
                     }
 
                     try
                     {
-                        id = Integer.parseInt(request.getParameter("id"));
+                        id = justiceUpdate.getGestionSeance().retourneAll()
+                                .get(justiceUpdate.getGestionSeance().retourneAll().size() - 1).getId() + 1;
                         proces_id = Integer.parseInt(request.getParameter("selectProces"));
 
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -64,7 +65,7 @@ public class Seance extends HttpServlet
                     }
                     catch (NumberFormatException | ParseException e)
                     {
-                        throw new IFT287Exception("Le format de l'id ou de la date est incorrect");
+                        throw new IFT287Exception("Le format de la date est incorrect");
                     }
 
                     // Ajout de la seance

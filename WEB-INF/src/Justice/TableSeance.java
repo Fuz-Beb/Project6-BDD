@@ -18,6 +18,8 @@ public class TableSeance
     private PreparedStatement stmtSeanceNonTerminee;
     private PreparedStatement stmtSupprimerSeance;
     private PreparedStatement stmtSelectAllFutur;
+    private PreparedStatement stmtSelectAll;
+
     private Connexion cx;
 
     /**
@@ -40,7 +42,9 @@ public class TableSeance
         stmtSupprimerSeance = cx.getConnection().prepareStatement("delete from \"Seance\" where \"id\" = ?");
         stmtInsertSeance = cx.getConnection()
                 .prepareStatement("insert into \"Seance\" (\"id\", \"Proces_id\", \"date\") values (?,?,?)");
-        stmtSelectAllFutur = cx.getConnection().prepareStatement("select * from \"Seance\" where \"date\" > current_date");
+        stmtSelectAllFutur = cx.getConnection()
+                .prepareStatement("select * from \"Seance\" where \"date\" > current_date");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Seance\"");
     }
 
     /**
@@ -192,6 +196,31 @@ public class TableSeance
     {
         ArrayList<TupleSeance> listSeance = new ArrayList<TupleSeance>();
         ResultSet rset = stmtSelectAllFutur.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listSeance.add(getSeance(new TupleSeance(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
+        return listSeance;
+    }
+
+    /**
+     * Retourne l'ensemble des séances
+     * 
+     * @return ArrayList<TupleSeance>
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TupleSeance> retourneAll() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleSeance> listSeance = new ArrayList<TupleSeance>();
+        ResultSet rset = stmtSelectAll.executeQuery();
 
         if (rset.next())
         {

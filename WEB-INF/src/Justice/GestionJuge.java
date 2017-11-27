@@ -45,7 +45,7 @@ public class GestionJuge
                 throw new IFT287Exception("Le juge existe déjà : " + tupleJuge.getId());
 
             juge.ajouter(tupleJuge);
-            
+
             cx.commit();
         }
         catch (Exception e)
@@ -76,9 +76,10 @@ public class GestionJuge
             throw e;
         }
     }
-    
+
     /**
      * Retourne l'ensemble des juges
+     * 
      * @return ArrayList<TupleJuge>
      * @throws Exception
      */
@@ -88,6 +89,28 @@ public class GestionJuge
         try
         {
             tupleJuge = juge.affichageAll();
+            cx.commit();
+            return tupleJuge;
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+
+    /**
+     * Retourne l'ensemble des juges
+     * 
+     * @return ArrayList<TupleJuge>
+     * @throws Exception
+     */
+    public ArrayList<TupleJuge> affichageAllAll() throws Exception
+    {
+        ArrayList<TupleJuge> tupleJuge = null;
+        try
+        {
+            tupleJuge = juge.affichageAllAll();
             cx.commit();
             return tupleJuge;
         }
@@ -113,7 +136,7 @@ public class GestionJuge
             if (proces.jugeEnCours(tupleJuge))
                 throw new IFT287Exception("Le juge " + tupleJuge.getId() + " n'a pas terminé tout ses procès");
             juge.retirer(tupleJuge);
-            
+
             cx.commit();
         }
         catch (Exception e)

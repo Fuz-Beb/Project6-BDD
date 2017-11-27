@@ -18,6 +18,11 @@ CONTENT="Gestion des avocats">
 
 <br><a href="Avocat?param=retour">Retour</a><br>
 
+<%
+GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();
+%>
+
 <H3>Création</H3>
 <TABLE style="border: 1px solid #A4A4A4">
   <tr>
@@ -28,13 +33,14 @@ CONTENT="Gestion des avocats">
 	</tr>
   <tr>
     <form action="Avocat" method="POST">
-<%    if (request.getParameter("id") != null)
+    <%        
+    if (list.size() == 0)
     { %>
-      <td> <input type="text" name="id" value='<%= request.getParameter("id") %>' /> </td>
-    <%}
+      <td width="120px"> 0 </td> <%
+    }
     else
     { %>
-      <td> <input type="text" name="id" value="" /> </td>
+      <td width="120px"> <%= list.get(list.size() - 1).getId() + 1 %> </td>
     <%}
 
     if (request.getParameter("prenom") != null)
@@ -91,8 +97,6 @@ CONTENT="Gestion des avocats">
 </TR>
 
 <%
-GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
-ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();
 	for (int i = 0 ; i < list.size(); i++)
 	{
     %>

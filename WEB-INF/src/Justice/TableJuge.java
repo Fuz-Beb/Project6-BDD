@@ -13,6 +13,7 @@ public class TableJuge
     private static PreparedStatement stmtExiste;
     private static PreparedStatement stmtInsert;
     private static PreparedStatement stmtSelect;
+    private static PreparedStatement stmtSelectAllActif;
     private static PreparedStatement stmtSelectAll;
     private static PreparedStatement stmtRetirer;
     private static PreparedStatement stmtChangeDisponibilite;
@@ -29,7 +30,9 @@ public class TableJuge
     {
         this.cx = cx;
         stmtSelect = cx.getConnection().prepareStatement("select * from \"Juge\" where \"disponible\" = true");
-        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Juge\" where \"quitterJustice\" = false");
+        stmtSelectAllActif = cx.getConnection()
+                .prepareStatement("select * from \"Juge\" where \"quitterJustice\" = false");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Juge\"");
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Juge\" where \"id\" = ?");
         stmtInsert = cx.getConnection()
                 .prepareStatement("insert into \"Juge\" (\"id\", \"prenom\", \"nom\", \"age\") values (?,?,?,?)");
@@ -119,6 +122,31 @@ public class TableJuge
      * @throws IFT287Exception
      */
     public ArrayList<TupleJuge> affichageAll() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleJuge> listJuge = new ArrayList<TupleJuge>();
+        ResultSet rset = stmtSelectAllActif.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                listJuge.add(getJuge(new TupleJuge(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+
+        return listJuge;
+    }
+
+    /**
+     * Retourne l'ensemble des juges actifs ou non
+     * 
+     * @return ArrayList<TupleJuge>
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TupleJuge> affichageAllAll() throws SQLException, IFT287Exception
     {
         ArrayList<TupleJuge> listJuge = new ArrayList<TupleJuge>();
         ResultSet rset = stmtSelectAll.executeQuery();

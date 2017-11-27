@@ -139,4 +139,26 @@ public class GestionSeance
             throw e;
         }
     }
+
+    /**
+     * Retourne l'ensemble des séances
+     * 
+     * @return ArrayList<TupleSeance>
+     * @throws Exception
+     */
+    public ArrayList<TupleSeance> retourneAll() throws Exception
+    {
+        ArrayList<TupleSeance> tupleSeance = null;
+        try
+        {
+            tupleSeance = seance.retourneAll();
+            cx.commit();
+            return tupleSeance;
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
 }

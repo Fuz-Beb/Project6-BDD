@@ -21,7 +21,7 @@ public class Avocat extends HttpServlet
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
-        GestionJustice gestionUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
+        GestionJustice justiceUpdate = (GestionJustice) request.getSession().getAttribute("justiceUpdate");
 
         // Vérification de l'état de la session
         HttpSession session = request.getSession();
@@ -43,29 +43,22 @@ public class Avocat extends HttpServlet
                     String prenom, nom;
 
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("id").equals("") || request.getParameter("prenom").equals("")
-                            || request.getParameter("nom").equals("") || request.getParameter("type").equals(""))
+                    if (request.getParameter("prenom").equals("") || request.getParameter("nom").equals("")
+                            || request.getParameter("type").equals(""))
                     {
                         throw new IFT287Exception("Les champs ne doivent pas être vides.");
                     }
 
-                    try
-                    {
-                        id = Integer.parseInt(request.getParameter("id"));
-                        prenom = request.getParameter("prenom");
-                        nom = request.getParameter("nom");
-                        type = Integer.parseInt(request.getParameter("type"));
-                    }
-                    catch (NumberFormatException e)
-                    {
-                        e.printStackTrace();
-                        throw new IFT287Exception("Le format de l'id est incorrect");
-                    }
+                    id = justiceUpdate.getGestionAvocat().affichage()
+                            .get(justiceUpdate.getGestionAvocat().affichage().size() - 1).getId() + 1;
+                    prenom = request.getParameter("prenom");
+                    nom = request.getParameter("nom");
+                    type = Integer.parseInt(request.getParameter("type"));
 
                     // Ajout du jury
-                    synchronized (gestionUpdate)
+                    synchronized (justiceUpdate)
                     {
-                        gestionUpdate.getGestionAvocat().ajouter(new TupleAvocat(id, prenom, nom, type));
+                        justiceUpdate.getGestionAvocat().ajouter(new TupleAvocat(id, prenom, nom, type));
                     }
                 }
                 else if (request.getParameter("param") != null)

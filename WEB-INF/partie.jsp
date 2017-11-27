@@ -27,17 +27,21 @@ CONTENT="Gestion des parties">
 		<td>Num. Avocat</td>
 	</tr>
   <tr>
+<%  GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+    ArrayList<TuplePartie> listPartie = gestionInterrogation.getGestionPartie().retourneAll();
+%>
     <form action="Partie" method="POST">
-<%    if (request.getParameter("id") != null)
-    { %>
-      <td> <input type="text" name="id" value='<%= request.getParameter("id") %>' /> </td>
-    <%}
-    else
-    { %>
-      <td> <input type="text" name="id" value="" /> </td>
-    <%}
-
-    if (request.getParameter("prenom") != null)
+      <%        
+      if (listPartie.size() == 0)
+      { %>
+        <td width="120px"> 0 </td> <%
+      }
+      else
+      { %>
+        <td width="120px"> <%= listPartie.get(listPartie.size() - 1).getId() + 1 %> </td><%
+      }%>
+    
+    <% if (request.getParameter("prenom") != null)
     { %>
       <td> <input type="text" name="prenom" value='<%= request.getParameter("prenom") %>' /> </td>
     <%}
@@ -60,13 +64,12 @@ CONTENT="Gestion des parties">
       <td>
         <SELECT name = "avocat_id" size="1">
         <%
-        	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
-        	ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();
+        	ArrayList<TupleAvocat> listAvocat = gestionInterrogation.getGestionAvocat().affichage();
 
-          for (int i = 0; i < list.size(); i++)
+          for (int i = 0; i < listAvocat.size(); i++)
         	{
             %>
-            <OPTION> <%= list.get(i).getId() %> </OPTION>
+            <OPTION> <%= listAvocat.get(i).getId() %> </OPTION>
         <% } %>
         </SELECT>
       </td>
@@ -76,13 +79,12 @@ CONTENT="Gestion des parties">
       <td>
         <SELECT name = "avocat_id" size="1">
         <%
-        	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
-        	ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();
+        	ArrayList<TupleAvocat> listAvocat = gestionInterrogation.getGestionAvocat().affichage();
 
-          for (int i = 0; i < list.size(); i++)
+          for (int i = 0; i < listAvocat.size(); i++)
         	{
             %>
-            <OPTION> <%= list.get(i).getId() %> </OPTION>
+            <OPTION> <%= listAvocat.get(i).getId() %> </OPTION>
         <% } %>
         </SELECT>
       </td>
@@ -105,16 +107,14 @@ CONTENT="Gestion des parties">
 </TR>
 
 <%
-GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
-ArrayList<TuplePartie> list = gestionInterrogation.getGestionPartie().retourneAll();
-	for (int i = 0 ; i < list.size(); i++)
+	for (int i = 0 ; i < listPartie.size(); i++)
 	{
     %>
     <TR>
-    		<TD><%= list.get(i).getId() %></TD>
-    		<TD><%= list.get(i).getPrenom() %></TD>
-    		<TD><%= list.get(i).getNom() %></TD>
-    		<TD><%= list.get(i).getAvocat_id() %></TD>
+    		<TD><%= listPartie.get(i).getId() %></TD>
+    		<TD><%= listPartie.get(i).getPrenom() %></TD>
+    		<TD><%= listPartie.get(i).getNom() %></TD>
+    		<TD><%= listPartie.get(i).getAvocat_id() %></TD>
     </TR>
 <% } %>
 

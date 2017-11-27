@@ -26,6 +26,8 @@ CONTENT="Gestion des proces">
 	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
 	ArrayList<TupleJuge> listJuge = justiceInterrogation.getGestionJuge().affichageAll();
 	ArrayList<TuplePartie> listPartie = justiceInterrogation.getGestionPartie().retourneAll();
+	ArrayList<TupleProces> listProces = justiceInterrogation.getGestionProces().retourneAll();
+
 
 	if (listJuge.size() == 0)
 	{
@@ -55,21 +57,21 @@ CONTENT="Gestion des proces">
 		</tr>
 		<tr>
 			<form action="Proces" method="POST">
-<%			if (request.getParameter("id") != null)
+<%				
+			if (listProces.size() == 0)
 			{ %>
-				<td> <input type="text" name="id" value='<%= request.getParameter("id") %>' /> </td>
-			<%}
+				<td width="120px"> 0 </td> <%
+			}
 			else
 			{ %>
-				<td> <input type="text" name="id" value=""/> </td>
-			<%}%>
-
-			<td> <SELECT name="selectJuge" size="1">
+				<td width="120px"> <%= listProces.get(listProces.size() - 1).getId() + 1 %> </td><%
+			}%>
+				<td> <SELECT name="selectJuge" size="1">
 <%					for (int i = 0; i < listJuge.size(); i++)
 					{ %>
 						<OPTION> <%= listJuge.get(i).getId() %> </OPTION>
 					<% } %>
-			</SELECT></td>
+				</SELECT></td>
 
 			<td> <input type="text" name="date" placeholder="2017/12/25"/> </td>
 			<td> <SELECT name="selectDevantJury" size="1">

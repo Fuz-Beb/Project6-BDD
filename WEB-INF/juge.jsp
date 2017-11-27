@@ -18,6 +18,10 @@ CONTENT="Gestion des juges">
 
 <br><a href="Juge?param=retour">Retour</a><br>
 
+<% 	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+	ArrayList<TupleJuge> listJuge = justiceInterrogation.getGestionJuge().affichageAllAll();
+%>
+
 <H3>Création</H3>
 <TABLE style="border: 1px solid #A4A4A4">
 	<tr>
@@ -28,13 +32,14 @@ CONTENT="Gestion des juges">
 	</tr>
 	<tr>
 		<form action="Juge" method="POST">
-<%			if (request.getParameter("id") != null)
+			<%				
+			if (listJuge.size() == 0)
 			{ %>
-				<td> <input type="text" name="id" value='<%= request.getParameter("id") %>' /> </td>
-			<%}
+				<td width="120px"> 0 </td> <%
+			}
 			else
 			{ %>
-				<td> <input type="text" name="id" value="" /> </td>
+				<td width="120px"> <%= listJuge.get(listJuge.size() - 1).getId() + 1 %> </td>
 			<%}
 
 			if (request.getParameter("prenom") != null)
@@ -75,7 +80,6 @@ CONTENT="Gestion des juges">
 		<label for="IdASupprimer">Id du juge à supprimer : </label>
 		<SELECT name="IdASupprimer" size="1">
 <%
-	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
 	ArrayList<TupleJuge> list = justiceInterrogation.getGestionJuge().affichage();
 
 	for (int i = 0; i < list.size(); i++)

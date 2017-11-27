@@ -42,22 +42,23 @@ public class Juge extends HttpServlet
                     String prenom, nom;
 
                     // Test si les champs ne sont pas vides
-                    if (request.getParameter("id").equals("") || request.getParameter("prenom").equals("")
-                            || request.getParameter("nom").equals("") || request.getParameter("age").equals(""))
+                    if (request.getParameter("prenom").equals("") || request.getParameter("nom").equals("")
+                            || request.getParameter("age").equals(""))
                     {
-                        throw new IFT287Exception("Les champs ne doivent pas être vides.");
+                        throw new IFT287Exception("Le champ ne doit pas être vide.");
                     }
 
                     try
                     {
-                        id = Integer.parseInt(request.getParameter("id"));
+                        id = justiceUpdate.getGestionJuge().affichageAllAll()
+                                .get(justiceUpdate.getGestionJuge().affichageAllAll().size() - 1).getId() + 1;
                         prenom = request.getParameter("prenom");
                         nom = request.getParameter("nom");
                         age = Integer.parseInt(request.getParameter("age"));
                     }
                     catch (NumberFormatException e)
                     {
-                        throw new IFT287Exception("Le format de l'id ou de l'age est incorrect");
+                        throw new IFT287Exception("Le format de l'age est incorrect");
                     }
 
                     // Ajout du juge

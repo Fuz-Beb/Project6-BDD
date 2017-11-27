@@ -22,6 +22,8 @@ CONTENT="Gestion des sessions">
 <%	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
 	ArrayList<TupleProces> listProces = justiceInterrogation.getGestionProces().retourneAllDecisionNull();
 	ArrayList<TupleSeance> listSeance = justiceInterrogation.getGestionSeance().retourneAllFutur();
+	ArrayList<TupleSeance> listSeance2 = justiceInterrogation.getGestionSeance().retourneAll();
+
 
 	List<String> listeMessageErreur = new LinkedList<String>();
 	Boolean erreur = false;
@@ -43,15 +45,16 @@ CONTENT="Gestion des sessions">
 			</tr>
 			<tr>
 				<form action="Seance" method="POST">
-		<%			if (request.getParameter("id") != null)
+					<%				
+					if (listSeance2.size() == 0)
 					{ %>
-						<td> <input type="text" name="id" value='<%= request.getParameter("id") %>' /> </td>
-					<%}
+						<td width="120px"> 0 </td> <%
+					}
 					else
 					{ %>
-						<td> <input type="text" name="id" value="" /> </td>
-					<%}%>
-
+						<td width="120px"> <%= listSeance2.get(listSeance2.size() - 1).getId() + 1 %> </td><%
+					}%>
+					
 					<td> <SELECT name="selectProces" size="1">
 		<%				for (int i = 0; i < listProces.size(); i++)
 						{ %>

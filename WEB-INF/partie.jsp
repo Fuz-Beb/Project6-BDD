@@ -71,8 +71,15 @@ CONTENT="Gestion des parties">
     { %>
       <td>
         <SELECT name = "type" size="1">
-          <OPTION> 0 </OPTION>
-          <OPTION> 1 </OPTION>
+        <%
+        	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+        	ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();
+
+          for (int i = 0; i < list.size(); i++)
+        	{
+            %>
+            <OPTION> <%= list.get(i).getId() %> </OPTION>
+        <% } %>
         </SELECT>
       </td>
     <%}
@@ -82,6 +89,32 @@ CONTENT="Gestion des parties">
   </tr>
 </table>
 
+<H3>Liste des parties</H3>
+
+<TABLE BORDER=1 WIDTH=600>
+
+<TR>
+<TH>Identifiant</TH>
+<TH>Prenom</TH>
+<TH>Nom</TH>
+<TH>Num. Avocat</TH>
+</TR>
+
+<%
+GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+ArrayList<TuplePartie> list = gestionInterrogation.getGestionPartie().retourneAll();
+	for (int i = 0 ; i < list.size(); i++)
+	{
+    %>
+    <TR>
+    		<TD><%= list.get(i).getId() %></TD>
+    		<TD><%= list.get(i).getPrenom() %></TD>
+    		<TD><%= list.get(i).getNom() %></TD>
+    		<TD><%= list.get(i).getAvocat_id() %></TD>
+    </TR>
+<% } %>
+
+</TABLE>
 
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>
 <jsp:include page="/WEB-INF/messageErreur.jsp" />

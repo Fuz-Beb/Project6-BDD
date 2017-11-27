@@ -54,7 +54,7 @@ CONTENT="Gestion des parties">
     if (request.getParameter("avocat_id") != null)
     { %>
       <td>
-        <SELECT name = "type" size="1">
+        <SELECT name = "avocat_id" size="1">
         <%
         	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
         	ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();
@@ -70,7 +70,7 @@ CONTENT="Gestion des parties">
     else
     { %>
       <td>
-        <SELECT name = "type" size="1">
+        <SELECT name = "avocat_id" size="1">
         <%
         	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
         	ArrayList<TupleAvocat> list = gestionInterrogation.getGestionAvocat().affichage();

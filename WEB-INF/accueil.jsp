@@ -17,7 +17,7 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
     <INPUT TYPE="SUBMIT" NAME="proces"  VALUE="Gestion des proces"> </INPUT>
     <INPUT TYPE="SUBMIT" NAME="jury"  VALUE="Gestion des jurys"> </INPUT>
     <INPUT TYPE="SUBMIT" NAME="juge"  VALUE="Gestion des juges"> </INPUT>
-    <INPUT TYPE="SUBMIT" NAME="session"  VALUE="Gestion des sessions"> </INPUT>
+    <INPUT TYPE="SUBMIT" NAME="session"  VALUE="Gestion des séances"> </INPUT>
     <INPUT TYPE="SUBMIT" NAME="partie"  VALUE="Gestion des parties"> </INPUT>
     <INPUT TYPE="SUBMIT" NAME="avocat"  VALUE="Gestion des avocats"> </INPUT>
 </FORM>

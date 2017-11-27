@@ -8,7 +8,7 @@
 <META NAME="author" CONTENT="Pierrick BOBET">
 <META NAME="author" CONTENT="Rémy BOUTELOUP">
 <META NAME="description"
-CONTENT="Gestion des sessions">
+CONTENT="Gestion des séances">
 </HEAD>
 <BODY>
 <CENTER>
@@ -72,7 +72,7 @@ CONTENT="Gestion des sessions">
 <H3>Suppression</H3>
 <form action="Seance" method="POST">
 	<p>
-		<label for="IdASupprimer">Id des sessions à supprimer : </label>
+		<label for="IdASupprimer">Id de la séance à supprimer : </label>
 		<SELECT name="IdASupprimer" size="1">
 <%
 		for (int i = 0; i < listSeance.size(); i++)

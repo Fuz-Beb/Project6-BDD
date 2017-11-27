@@ -19,82 +19,76 @@ CONTENT="Gestion des parties">
 <br><a href="Partie?param=retour">Retour</a><br>
 
 <H3>Création</H3>
-<TABLE style="border: 1px solid #A4A4A4">
-  <tr>
-    <td>Id</td>
-		<td>Prenom</td>
-		<td>Nom</td>
-		<td>Num. Avocat</td>
-	</tr>
-  <tr>
-<%  GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
-    ArrayList<TuplePartie> listPartie = gestionInterrogation.getGestionPartie().retourneAll();
-%>
-    <form action="Partie" method="POST">
-      <%        
-      if (listPartie.size() == 0)
-      { %>
-        <td width="120px"> 0 </td> <%
-      }
-      else
-      { %>
-        <td width="120px"> <%= listPartie.get(listPartie.size() - 1).getId() + 1 %> </td><%
-      }%>
-    
-    <% if (request.getParameter("prenom") != null)
-    { %>
-      <td> <input type="text" name="prenom" value='<%= request.getParameter("prenom") %>' /> </td>
-    <%}
-    else
-    { %>
-      <td> <input type="text" name="prenom" value="" /> </td>
-    <%}
 
-    if (request.getParameter("nom") != null)
-    { %>
-      <td> <input type="text" name="nom" value='<%= request.getParameter("nom") %>' /> </td>
-    <%}
-    else
-    { %>
-      <td> <input type="text" name="nom" value="" /> </td>
-    <%}
+<% List<String> listeMessageErreur = new LinkedList<String>();
+	Boolean erreur = false;
 
-    if (request.getParameter("avocat_id") != null)
-    { %>
-      <td>
-        <SELECT name = "avocat_id" size="1">
-        <%
-        	ArrayList<TupleAvocat> listAvocat = gestionInterrogation.getGestionAvocat().affichage();
+  GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
+  ArrayList<TupleAvocat> listAvocat = gestionInterrogation.getGestionAvocat().affichage();
+  ArrayList<TuplePartie> listPartie = gestionInterrogation.getGestionPartie().retourneAll();
 
-          for (int i = 0; i < listAvocat.size(); i++)
-        	{
-            %>
-            <OPTION> <%= listAvocat.get(i).getId() %> </OPTION>
-        <% } %>
-        </SELECT>
-      </td>
-    <%}
-    else
-    { %>
-      <td>
-        <SELECT name = "avocat_id" size="1">
-        <%
-        	ArrayList<TupleAvocat> listAvocat = gestionInterrogation.getGestionAvocat().affichage();
+  if (listAvocat.size() == 0)
+	{
+        listeMessageErreur.add("Création impossible : Aucun avocat actif dans la base de données");
+        request.setAttribute("listeMessageErreur", listeMessageErreur);
+        erreur = true;
+	}
 
-          for (int i = 0; i < listAvocat.size(); i++)
-        	{
-            %>
-            <OPTION> <%= listAvocat.get(i).getId() %> </OPTION>
-        <% } %>
-        </SELECT>
-      </td>
-    <%}
-    %>
-    <td><input type="submit" name="Valider" value="Ajouter"></td>
-    </form>
-  </tr>
-</table>
+  if (!erreur)
+	{ %>
+    <TABLE style="border: 1px solid #A4A4A4">
+      <tr>
+        <td>Id</td>
+    		<td>Prenom</td>
+    		<td>Nom</td>
+    		<td>Num. Avocat</td>
+    	</tr>
+      <tr>
+        <form action="Partie" method="POST">
+        <%        
+        if (listPartie.size() == 0)
+        { %>
+          <td width="120px"> 0 </td> <%
+        }
+        else
+        { %>
+          <td width="120px"> <%= listPartie.get(listPartie.size() - 1).getId() + 1 %> </td><%
+        }
 
+        if (request.getParameter("prenom") != null)
+        { %>
+          <td> <input type="text" name="prenom" value='<%= request.getParameter("prenom") %>' /> </td>
+        <%}
+        else
+        { %>
+          <td> <input type="text" name="prenom" value="" /> </td>
+        <%}
+
+        if (request.getParameter("nom") != null)
+        { %>
+          <td> <input type="text" name="nom" value='<%= request.getParameter("nom") %>' /> </td>
+        <%}
+        else
+        { %>
+          <td> <input type="text" name="nom" value="" /> </td>
+        <%}
+        %>
+        
+        <td>
+            <SELECT name = "avocat_id" size="1">
+            <%
+              for (int i = 0; i < listAvocat.size(); i++)
+            	{
+                %>
+                <OPTION> <%= listAvocat.get(i).getId() %> </OPTION>
+            <% } %>
+            </SELECT>
+          </td>
+        <td><input type="submit" name="Valider" value="Ajouter"></td>
+        </form>
+      </tr>
+    </table>
+	<%} %>
 <H3>Liste des parties</H3>
 
 <TABLE BORDER=1 WIDTH=600>

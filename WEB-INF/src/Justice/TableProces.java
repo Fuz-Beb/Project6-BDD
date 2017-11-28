@@ -40,7 +40,7 @@ public class TableProces
         stmtTerminerProces = cx.getConnection()
                 .prepareStatement("update \"Proces\" set \"decision\" = ? where \"id\" = ?");
         stmtVerificationProcesDecision = cx.getConnection()
-                .prepareStatement("select * from \"Proces\" where \"id\" = ? and \"decision\" != -1");
+                .prepareStatement("select * from \"Proces\" where \"id\" = ? and \"decision\" < 0");
         stmtInsertProces = cx.getConnection().prepareStatement(
                 "insert into \"Proces\" (\"id\", \"Juge_id\", \"date\", \"devantJury\", \"PartieDefenderesse_id\", \"PartiePoursuivant_id\", \"decision\") "
                         + "values (?,?,?,?,?,?,-1)");

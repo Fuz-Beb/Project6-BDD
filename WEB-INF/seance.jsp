@@ -85,6 +85,27 @@ CONTENT="Gestion des séances">
 	<input type="submit" name="Supprimer" value="Supprimer">
 </form>
 
+<H3>Affichage de l'ensemble des séances</H3>
+<form action="Seance" method="POST">
+	<p>
+		<TABLE BORDER=1 WIDTH=600>
+			<TR>
+				<TH>Identifiant</TH>
+				<TH>Proces_id</TH>
+				<TH>Date</TH>
+			<%
+			for (int i = 0 ; i < listSeance2.size(); i++)
+			{ %>
+			<TR>
+				<TD><%= listSeance2.get(i).getId() %></TD>
+				<TD><%= listSeance2.get(i).getProces_id() %></TD>
+				<TD><%= listSeance2.get(i).getDate().toString() %></TD>
+			</TR>
+			<% } %>
+		</TABLE>
+	</p>
+</form>
+
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>
 <jsp:include page="/WEB-INF/messageErreur.jsp" />
 <BR>

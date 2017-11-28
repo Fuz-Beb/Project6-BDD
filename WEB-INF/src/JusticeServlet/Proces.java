@@ -61,6 +61,9 @@ public class Proces extends HttpServlet
                         partieD_id = Integer.parseInt(request.getParameter("selectPartieD"));
                         partieP_id = Integer.parseInt(request.getParameter("selectPartieP"));
 
+                        if(partieD_id.equals(partieP_id))
+                            throw new IFT287Exception("La partie poursuivante ne doit pas être la même que la partie défenderesse.");
+                        
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                         dateFormat.setLenient(false);
 

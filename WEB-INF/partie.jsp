@@ -89,29 +89,25 @@ CONTENT="Gestion des parties">
       </tr>
     </table>
 	<%} %>
+
 <H3>Liste des parties</H3>
-
 <TABLE BORDER=1 WIDTH=600>
+  <TR>
+    <TH>Identifiant</TH>
+    <TH>Prenom</TH>
+    <TH>Nom</TH>
+    <TH>Num. Avocat</TH>
+  </TR>
 
-<TR>
-<TH>Identifiant</TH>
-<TH>Prenom</TH>
-<TH>Nom</TH>
-<TH>Num. Avocat</TH>
-</TR>
-
-<%
-	for (int i = 0 ; i < listPartie.size(); i++)
-	{
-    %>
+  <% for (int i = 0 ; i < listPartie.size(); i++)
+	{ %>
     <TR>
     		<TD><%= listPartie.get(i).getId() %></TD>
     		<TD><%= listPartie.get(i).getPrenom() %></TD>
     		<TD><%= listPartie.get(i).getNom() %></TD>
     		<TD><%= listPartie.get(i).getAvocat_id() %></TD>
     </TR>
-<% } %>
-
+  <% } %>
 </TABLE>
 
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>

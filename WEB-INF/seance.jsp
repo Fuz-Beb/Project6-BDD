@@ -86,25 +86,21 @@ CONTENT="Gestion des séances">
 </form>
 
 <H3>Affichage de l'ensemble des séances</H3>
-<form action="Seance" method="POST">
-	<p>
-		<TABLE BORDER=1 WIDTH=600>
-			<TR>
-				<TH>Identifiant</TH>
-				<TH>Proces_id</TH>
-				<TH>Date</TH>
-			<%
-			for (int i = 0 ; i < listSeance2.size(); i++)
-			{ %>
+<TABLE BORDER=1 WIDTH=600>
+	<TR>
+		<TH>Identifiant</TH>
+		<TH>Proces_id</TH>
+		<TH>Date</TH>
+	</TR>
+		<% for (int i = 0 ; i < listSeance2.size(); i++)
+		{ %>
 			<TR>
 				<TD><%= listSeance2.get(i).getId() %></TD>
 				<TD><%= listSeance2.get(i).getProces_id() %></TD>
 				<TD><%= listSeance2.get(i).getDate().toString() %></TD>
 			</TR>
 			<% } %>
-		</TABLE>
-	</p>
-</form>
+</TABLE>
 
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>
 <jsp:include page="/WEB-INF/messageErreur.jsp" />

@@ -37,15 +37,6 @@ CONTENT="Gestion des jurys">
     { %>
       <td> <input type="text" name="nas" value="" /> </td>
     <%}
-    
-    if (request.getParameter("nas") != null)
-    { %>
-      <td> <input type="text" name="nas" value='<%= request.getParameter("nas") %>' /> </td>
-    <%}
-    else
-    { %>
-      <td> <input type="text" name="nas" value="" /> </td>
-    <%}
 
     if (request.getParameter("prenom") != null)
     { %>
@@ -63,27 +54,16 @@ CONTENT="Gestion des jurys">
     else
     { %>
       <td> <input type="text" name="nom" value="" /> </td>
-    <%}
+    <%}%>
 
-    if (request.getParameter("sexe") != null)
-    { %>
-      <td>
-        <SELECT name = "sexe" size="1">
-          <OPTION> M </OPTION>
-          <OPTION> F </OPTION>
-        </SELECT>
-      </td>
-    <%}
-    else
-    { %>
-      <td>
-        <SELECT name = "sexe" size="1">
-          <OPTION> M </OPTION>
-          <OPTION> F </OPTION>
-        </SELECT>
-      </td>
-    <%}
+    <td>
+      <SELECT name = "sexe" size="1">
+        <OPTION> M </OPTION>
+        <OPTION> F </OPTION>
+      </SELECT>
+    </td>
 
+    <%
     if (request.getParameter("age") != null)
     { %>
       <td> <input type="text" name="age" value='<%= request.getParameter("age") %>' /> </td>

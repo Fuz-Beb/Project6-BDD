@@ -49,8 +49,11 @@ public class Partie extends HttpServlet
                         throw new IFT287Exception("Le champ ne doit pas être vide.");
                     }
 
-                    id = justiceUpdate.getGestionPartie().retourneAll()
-                            .get(justiceUpdate.getGestionPartie().retourneAll().size() - 1).getId() + 1;
+                    if (justiceUpdate.getGestionPartie().retourneAll().size() == 0)
+                        id = 0;
+                    else
+                        id = justiceUpdate.getGestionPartie().retourneAll()
+                                .get(justiceUpdate.getGestionPartie().retourneAll().size() - 1).getId() + 1;
                     prenom = request.getParameter("prenom");
                     nom = request.getParameter("nom");
                     avocat_id = Integer.parseInt(request.getParameter("avocat_id"));

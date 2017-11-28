@@ -49,8 +49,11 @@ public class Avocat extends HttpServlet
                         throw new IFT287Exception("Les champs ne doivent pas être vides.");
                     }
 
-                    id = justiceUpdate.getGestionAvocat().affichage()
-                            .get(justiceUpdate.getGestionAvocat().affichage().size() - 1).getId() + 1;
+                    if (justiceUpdate.getGestionAvocat().affichage().size() == 0)
+                        id = 0;
+                    else
+                        id = justiceUpdate.getGestionAvocat().affichage()
+                                .get(justiceUpdate.getGestionAvocat().affichage().size() - 1).getId() + 1;
                     prenom = request.getParameter("prenom");
                     nom = request.getParameter("nom");
                     type = Integer.parseInt(request.getParameter("type"));

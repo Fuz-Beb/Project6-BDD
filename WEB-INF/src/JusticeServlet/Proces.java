@@ -52,8 +52,11 @@ public class Proces extends HttpServlet
 
                     try
                     {
-                        id = justiceUpdate.getGestionProces().retourneAll()
-                                .get(justiceUpdate.getGestionProces().retourneAll().size() - 1).getId() + 1;
+                        if (justiceUpdate.getGestionProces().retourneAll().size() == 0)
+                            id = 0;
+                        else
+                            id = justiceUpdate.getGestionProces().retourneAll()
+                                    .get(justiceUpdate.getGestionProces().retourneAll().size() - 1).getId() + 1;
                         juge_id = Integer.parseInt(request.getParameter("selectJuge"));
                         partieD_id = Integer.parseInt(request.getParameter("selectPartieD"));
                         partieP_id = Integer.parseInt(request.getParameter("selectPartieP"));

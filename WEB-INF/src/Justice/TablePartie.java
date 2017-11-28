@@ -26,7 +26,7 @@ public class TablePartie
     {
         this.cx = cx;
         stmtExistePartie = cx.getConnection().prepareStatement("select * from \"Partie\" where \"id\" = ?");
-        stmtRetourneAllPartie = cx.getConnection().prepareStatement("select * from \"Partie\"");
+        stmtRetourneAllPartie = cx.getConnection().prepareStatement("select * from \"Partie\" ORDER BY id");
         stmtInsertPartie = cx.getConnection().prepareStatement(
                 "insert into \"Partie\" (\"id\", \"prenom\", \"nom\", \"Avocat_id\") values (?,?,?,?)");
     }

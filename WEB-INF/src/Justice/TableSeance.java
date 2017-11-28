@@ -43,8 +43,8 @@ public class TableSeance
         stmtInsertSeance = cx.getConnection()
                 .prepareStatement("insert into \"Seance\" (\"id\", \"Proces_id\", \"date\") values (?,?,?)");
         stmtSelectAllFutur = cx.getConnection()
-                .prepareStatement("select * from \"Seance\" where \"date\" > current_date");
-        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Seance\"");
+                .prepareStatement("select * from \"Seance\" where \"date\" > current_date ORDER BY id");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Seance\" ORDER BY id");
     }
 
     /**

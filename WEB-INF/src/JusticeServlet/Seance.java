@@ -53,8 +53,11 @@ public class Seance extends HttpServlet
 
                     try
                     {
-                        id = justiceUpdate.getGestionSeance().retourneAll()
-                                .get(justiceUpdate.getGestionSeance().retourneAll().size() - 1).getId() + 1;
+                        if (justiceUpdate.getGestionSeance().retourneAll().size() == 0)
+                            id = 0;
+                        else
+                            id = justiceUpdate.getGestionSeance().retourneAll()
+                                    .get(justiceUpdate.getGestionSeance().retourneAll().size() - 1).getId() + 1;
                         proces_id = Integer.parseInt(request.getParameter("selectProces"));
 
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");

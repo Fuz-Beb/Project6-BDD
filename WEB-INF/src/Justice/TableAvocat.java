@@ -29,7 +29,7 @@ public class TableAvocat
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Avocat\" where \"id\" = ?");
         stmtInsert = cx.getConnection()
                 .prepareStatement("insert into \"Avocat\" (id, prenom, nom, type) values (?,?,?,?)");
-        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Avocat\"");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Avocat\" ORDER BY id");
     }
 
     /**

@@ -50,8 +50,11 @@ public class Juge extends HttpServlet
 
                     try
                     {
-                        id = justiceUpdate.getGestionJuge().affichageAllAll()
-                                .get(justiceUpdate.getGestionJuge().affichageAllAll().size() - 1).getId() + 1;
+                        if (justiceUpdate.getGestionJuge().affichageAllAll().size() == 0)
+                            id = 0;
+                        else
+                            id = justiceUpdate.getGestionJuge().affichageAllAll()
+                                    .get(justiceUpdate.getGestionJuge().affichageAllAll().size() - 1).getId() + 1;
                         prenom = request.getParameter("prenom");
                         nom = request.getParameter("nom");
                         age = Integer.parseInt(request.getParameter("age"));

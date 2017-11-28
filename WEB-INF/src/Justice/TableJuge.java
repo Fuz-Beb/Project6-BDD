@@ -29,10 +29,11 @@ public class TableJuge
     public TableJuge(Connexion cx) throws SQLException
     {
         this.cx = cx;
-        stmtSelect = cx.getConnection().prepareStatement("select * from \"Juge\" where \"disponible\" = true");
+        stmtSelect = cx.getConnection()
+                .prepareStatement("select * from \"Juge\" where \"disponible\" = true ORDER BY id");
         stmtSelectAllActif = cx.getConnection()
-                .prepareStatement("select * from \"Juge\" where \"quitterJustice\" = false");
-        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Juge\"");
+                .prepareStatement("select * from \"Juge\" where \"quitterJustice\" = false ORDER BY id");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Juge\" ORDER BY id");
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Juge\" where \"id\" = ?");
         stmtInsert = cx.getConnection()
                 .prepareStatement("insert into \"Juge\" (\"id\", \"prenom\", \"nom\", \"age\") values (?,?,?,?)");

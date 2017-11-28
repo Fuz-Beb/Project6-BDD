@@ -104,12 +104,12 @@ CONTENT="Gestion des proces">
 		<label for="IdATerminer">Id du proces à terminer : </label>
 		<SELECT name="IdATerminer" size="1">
 <%
-	ArrayList<TupleProces> list = justiceInterrogation.getGestionProces().retourneAllNonTermine();
+	listProces = justiceInterrogation.getGestionProces().retourneAllNonTermine();
 
-	for (int i = 0; i < list.size(); i++)
+	for (int i = 0; i < listProces.size(); i++)
 	{
 %>
-	<OPTION> <%= list.get(i).getId() %> </OPTION>
+	<OPTION> <%= listProces.get(i).getId() %> </OPTION>
 
 <% } %>
 		</SELECT>
@@ -125,7 +125,7 @@ CONTENT="Gestion des proces">
 </form>
 
 <H3>Affichage de l'ensemble des proces</H3>
-	<%list = justiceInterrogation.getGestionProces().retourneAll();%>
+	<%listProces = justiceInterrogation.getGestionProces().retourneAll();%>
 <form action="Proces" method="POST">
 	<p>
 		<TABLE BORDER=1 WIDTH=600>
@@ -138,16 +138,16 @@ CONTENT="Gestion des proces">
 				<TH>PartiePoursuivante</TH>
 				<TH>Decision</TH>
 			<%
-			for (int i = 0 ; i < list.size(); i++)
+			for (int i = 0 ; i < listProces.size(); i++)
 			{ %>
 			<TR>
-				<TD><%= list.get(i).getId() %></TD>
-				<TD><%= list.get(i).getJuge_id() %></TD>
-				<TD><%= list.get(i).getDate().toString() %></TD>
-				<TD><%= list.get(i).getDevantJury() %></TD>
-				<TD><%= list.get(i).getPartieDefenderesse_id() %></TD>
-				<TD><%= list.get(i).getPartiePoursuivant_id() %></TD>
-				<TD><%= list.get(i).getDecision() %></TD>
+				<TD><%= listProces.get(i).getId() %></TD>
+				<TD><%= listProces.get(i).getJuge_id() %></TD>
+				<TD><%= listProces.get(i).getDate().toString() %></TD>
+				<TD><%= listProces.get(i).getDevantJury() %></TD>
+				<TD><%= listProces.get(i).getPartieDefenderesse_id() %></TD>
+				<TD><%= listProces.get(i).getPartiePoursuivant_id() %></TD>
+				<TD><%= listProces.get(i).getDecision() %></TD>
 			</TR>
 			<% } %>
 		</TABLE>

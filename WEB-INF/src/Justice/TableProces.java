@@ -40,21 +40,21 @@ public class TableProces
         stmtTerminerProces = cx.getConnection()
                 .prepareStatement("update \"Proces\" set \"decision\" = ? where \"id\" = ?");
         stmtVerificationProcesDecision = cx.getConnection()
-                .prepareStatement("select * from \"Proces\" where \"id\" = ? and \"decision\" != \"-1\"");
+                .prepareStatement("select * from \"Proces\" where \"id\" = ? and \"decision\" != -1");
         stmtInsertProces = cx.getConnection().prepareStatement(
                 "insert into \"Proces\" (\"id\", \"Juge_id\", \"date\", \"devantJury\", \"PartieDefenderesse_id\", \"PartiePoursuivant_id\", \"decision\") "
                         + "values (?,?,?,?,?,?,-1)");
         stmtProcesJugeEnCours = cx.getConnection()
                 .prepareStatement("select * from \"Proces\" where \"Juge_id\" = ? and \"decision\" = -1");
         stmtVerificationProcesDevantJury = cx.getConnection()
-                .prepareStatement("select from \"Proces\" where \"id\" = ? and \"devantJury\" = 1");
+                .prepareStatement("select * from \"Proces\" where \"id\" = ? and \"devantJury\" = 1");
         stmtSelectJugeDansProces = cx.getConnection()
                 .prepareStatement("select \"Juge_id\" from \"Proces\" where \"id\" = ?");
-        stmtSelectAllProcesNonTermine = cx.getConnection()
-                .prepareStatement("select * from \"Proces\" where \"decision\" = -1 and \"date\" < current_date");
-        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Proces\"");
+        stmtSelectAllProcesNonTermine = cx.getConnection().prepareStatement(
+                "select * from \"Proces\" where \"decision\" = -1 and \"date\" < current_date ORDER BY id");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Proces\" ORDER BY id");
         stmtSelectAllDecisionNull = cx.getConnection()
-                .prepareStatement("select * from \"Proces\" where \"decision\" = -1");
+                .prepareStatement("select * from \"Proces\" where \"decision\" = -1 ORDER BY id");
     }
 
     /**

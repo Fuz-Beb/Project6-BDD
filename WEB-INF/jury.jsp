@@ -98,7 +98,7 @@ CONTENT="Gestion des jurys">
     <label for="ProcesAssigner">au procès numéro</label>
     <SELECT name = "ProcesAssigner" size="1">
     <%
-    	ArrayList<TupleProces> listProces = gestionInterrogation.getGestionProces().retourneAllNonTermine();
+    	ArrayList<TupleProces> listProces = gestionInterrogation.getGestionProces().retourneAllDecisionNull();
 
     	for (int i = 0; i < listProces.size(); i++)
     	{

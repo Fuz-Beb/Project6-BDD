@@ -26,7 +26,6 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
   GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
   ArrayList<TupleJuge> listJuge = gestionInterrogation.getGestionJuge().affichage();
   ArrayList<TupleJury> listJury = gestionInterrogation.getGestionJury().affichage();
-  ArrayList<TupleJury> listJuryAll = gestionInterrogation.getGestionJury().affichageAll();
   ArrayList<TupleProces> listProces = gestionInterrogation.getGestionProces().retourneAll();
   ArrayList<TuplePartie> listPartie = gestionInterrogation.getGestionPartie().retourneAll();
   ArrayList<TupleSeance> listSeance = gestionInterrogation.getGestionSeance().retourneAll();
@@ -99,7 +98,7 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
 </TABLE>
 
 <br><br>
-<H3>Liste des jurys disponibles</H3>
+<H3>Liste des jurys</H3>
 <TABLE BORDER=1 WIDTH=600>
 	<TR>
 		<TH>NAS</TH>
@@ -116,28 +115,6 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
 			<TD><%= listJury.get(i).getNom() %></TD>
     	<TD><%= listJury.get(i).getSexe() %></TD>
 			<TD><%= listJury.get(i).getAge() %></TD>
-		</TR>
-	<% } %>
-</TABLE>
-
-<br><br>
-<H3>Liste des jurys</H3>
-<TABLE BORDER=1 WIDTH=600>
-	<TR>
-		<TH>NAS</TH>
-		<TH>Prenom</TH>
-		<TH>Nom</TH>
-		<TH>Sexe</TH>
-		<TH>Age</TH>
-	</TR>
-	<% for (int i = 0 ; i < listJuryAll.size(); i++)
-	{ %>
-		<TR>
-			<TD><%= listJuryAll.get(i).getNas() %></TD>
-			<TD><%= listJuryAll.get(i).getPrenom() %></TD>
-			<TD><%= listJuryAll.get(i).getNom() %></TD>
-    	<TD><%= listJuryAll.get(i).getSexe() %></TD>
-			<TD><%= listJuryAll.get(i).getAge() %></TD>
 		</TR>
 	<% } %>
 </TABLE>

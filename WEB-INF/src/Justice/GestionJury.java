@@ -71,30 +71,4 @@ public class GestionJury
             throw e;
         }
     }
-
-    /**
-     * Afficher la liste des jurys
-     * 
-     * @return ArrayList<TupleJury>
-     *
-     * @throws Exception
-     */
-    public ArrayList<TupleJury> affichageAll() throws Exception
-    {
-        ArrayList<TupleJury> tupleJury = null;
-
-        try
-        {
-            tupleJury = jury.affichageAll();
-
-            cx.commit();
-
-            return tupleJury;
-        }
-        catch (Exception e)
-        {
-            cx.rollback();
-            throw e;
-        }
-    }
 }

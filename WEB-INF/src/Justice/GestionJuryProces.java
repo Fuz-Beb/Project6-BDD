@@ -49,6 +49,8 @@ public class GestionJuryProces
                 throw new IFT287Exception("Proces n'existe pas : " + tupleProces.getId());
             if (!proces.devantJury(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + " doit se tenir devant un juge seul");
+            if(juryProces.memeProces(tupleJury, tupleProces))
+                throw new IFT287Exception("Le jury " + tupleJury.getNas() + " est déjà assigné au procès " + tupleProces.getId());
             if (juryProces.memeJour(tupleJury, tupleProces))
                 throw new IFT287Exception("Le jury " + tupleJury.getNas() + " a déjà un procès en même temps que le procès " + tupleProces.getId());
             juryProces.assignerProces(tupleJury, tupleProces);

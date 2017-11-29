@@ -105,7 +105,6 @@ CREATE TABLE  "Jury" (
   "nom" VARCHAR(45) NULL,
   "sexe" VARCHAR(1) NOT NULL,
   "age" INT NOT NULL,
-  "occupe" BOOLEAN NOT NULL,
   PRIMARY KEY ("nas"));
 
   -- -----------------------------------------------------

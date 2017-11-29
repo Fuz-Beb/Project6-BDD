@@ -13,7 +13,6 @@ public class TableJury
     private static PreparedStatement stmtExiste;
     private static PreparedStatement stmtInsert;
     private static PreparedStatement stmtSelect;
-    private static PreparedStatement stmtSelectAll;
     private Connexion cx;
 
     /**
@@ -26,12 +25,11 @@ public class TableJury
     public TableJury(Connexion cx) throws SQLException
     {
         this.cx = cx;
-        stmtSelect = cx.getConnection().prepareStatement("select * from \"Jury\" where \"occupe\" = false");
-        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Jury\"");
+        stmtSelect = cx.getConnection().prepareStatement("select * from \"Jury\"");
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Jury\" where \"nas\" = ?");
         stmtInsert = cx.getConnection().prepareStatement(
-                "insert into \"Jury\" (\"nas\", \"prenom\", \"nom\", \"sexe\", \"age\", \"occupe\") "
-                        + "values (?,?,?,?,?,false)");        
+                "insert into \"Jury\" (\"nas\", \"prenom\", \"nom\", \"sexe\", \"age\") "
+                        + "values (?,?,?,?,?)");        
     }
 
     /**
@@ -94,32 +92,6 @@ public class TableJury
         ArrayList<TupleJury> listJury = new ArrayList<TupleJury>();
 
         ResultSet rset = stmtSelect.executeQuery();
-
-        if (rset.next())
-        {
-            do
-            {
-                // Ajout de chacun des juges dans la liste
-                listJury.add(getJury(new TupleJury(rset.getInt(1))));
-            }
-            while (rset.next());
-        }
-        rset.close();
-        return listJury;
-    }
-
-    /**
-     * Affiche la liste des jurys
-     * 
-     * @return String
-     * @throws SQLException
-     * @throws IFT287Exception
-     */
-    public ArrayList<TupleJury> affichageAll() throws SQLException, IFT287Exception
-    {
-        ArrayList<TupleJury> listJury = new ArrayList<TupleJury>();
-
-        ResultSet rset = stmtSelectAll.executeQuery();
 
         if (rset.next())
         {

@@ -13,10 +13,9 @@ public class TableJuryProces
     private static PreparedStatement stmtSelect;
     private static PreparedStatement stmtExisteJuryProces;
     private static PreparedStatement stmtInsertJuryProces;
-    private static PreparedStatement stmtUpdateOcuppeJuryProces;
     private static PreparedStatement stmtProcesMemeJour;
     private Connexion cx;
-    
+
     /**
      * Création d'une instance. Des énoncés SQL pour chaque requête sont
      * précompilés.
@@ -27,17 +26,14 @@ public class TableJuryProces
     public TableJuryProces(Connexion cx) throws SQLException
     {
         this.cx = cx;
-        stmtSelect = cx.getConnection()
-                .prepareStatement("select * from \"JuryProces\"");
+        stmtSelect = cx.getConnection().prepareStatement("select * from \"JuryProces\"");
         stmtExisteJuryProces = cx.getConnection()
                 .prepareStatement("select * from \"JuryProces\" where \"Jury_id\" = ? and \"Proces_id\" = ?");
         stmtInsertJuryProces = cx.getConnection()
                 .prepareStatement("insert into \"JuryProces\" (\"Jury_id\", \"Proces_id\")" + "values (?,?)");
-        stmtUpdateOcuppeJuryProces = cx.getConnection().prepareStatement("update \"Jury\" set \"occupe\" = true where \"nas\" = ?");
-        stmtProcesMemeJour = cx.getConnection()
-                .prepareStatement("select * from \"Proces\" where \"date\" = ?");
+        stmtProcesMemeJour = cx.getConnection().prepareStatement("select * from \"Proces\" where \"date\" = ?");
     }
-    
+
     /**
      * Retourne la commande associée
      * 
@@ -73,7 +69,7 @@ public class TableJuryProces
         rset.close();
         return listJury;
     }
-    
+
     /**
      * Assigner un proces à un jury
      * 
@@ -98,26 +94,24 @@ public class TableJuryProces
         stmtInsertJuryProces.setInt(1, tupleJury.getNas());
         stmtInsertJuryProces.setInt(2, tupleProces.getId());
         stmtInsertJuryProces.executeUpdate();
-        
-        stmtUpdateOcuppeJuryProces.setInt(1, tupleJury.getNas());
-        stmtUpdateOcuppeJuryProces.executeUpdate();
     }
 
     /**
-     * Verification d'un jury qui aurait un procès le meme jour qu'un proces à assigner
+     * Verification d'un jury qui aurait un procès le meme jour qu'un proces à
+     * assigner
      * 
-     * @param tupleJury 
-     * @param tupleProces 
+     * @param tupleJury
+     * @param tupleProces
      * @return boolean
-     * @throws SQLException 
-     * @throws IFT287Exception 
+     * @throws SQLException
+     * @throws IFT287Exception
      */
     public boolean memeJour(TupleJury tupleJury, TupleProces tupleProces) throws SQLException, IFT287Exception
     {
         ArrayList<TupleProces> listeProcesMemeDate = recuperationProcesMemeDate(tupleProces);
-        
+
         // Comparaison pour savoir si le jury à un procès à la même date
-        
+
         return comparaisonJuryMemeDate(tupleJury, tupleProces, listeProcesMemeDate);
     }
 
@@ -126,13 +120,13 @@ public class TableJuryProces
      * @param listeProcesMemeDate
      * @throws SQLException
      */
-    private boolean comparaisonJuryMemeDate(TupleJury tupleJury, TupleProces tupleProces, ArrayList<TupleProces> listeProcesMemeDate)
-            throws SQLException
+    private boolean comparaisonJuryMemeDate(TupleJury tupleJury, TupleProces tupleProces,
+            ArrayList<TupleProces> listeProcesMemeDate) throws SQLException
     {
         ResultSet rset;
         stmtExisteJuryProces.setInt(1, tupleJury.getNas());
-        
-        for (int boucle = 0; boucle < listeProcesMemeDate.size() ; boucle++)
+
+        for (int boucle = 0; boucle < listeProcesMemeDate.size(); boucle++)
         {
             stmtExisteJuryProces.setInt(2, listeProcesMemeDate.get(boucle).getId());
             rset = stmtExisteJuryProces.executeQuery();
@@ -141,10 +135,10 @@ public class TableJuryProces
                 rset.close();
                 return true;
             }
-            
+
             rset.close();
         }
-        
+
         return false;
     }
 
@@ -158,11 +152,12 @@ public class TableJuryProces
             throws SQLException, IFT287Exception
     {
         ArrayList<TupleProces> listeProcesMemeDate = new ArrayList<TupleProces>();
-        
-        // Récupération de tout les Procès qui sont à la même date que le procès à assigner
+
+        // Récupération de tout les Procès qui sont à la même date que le procès
+        // à assigner
         stmtProcesMemeJour.setDate(1, TableProces.getProces(tupleProces).getDate());
         ResultSet rset = stmtProcesMemeJour.executeQuery();
-        
+
         if (rset.next())
         {
             do
@@ -172,32 +167,58 @@ public class TableJuryProces
             }
             while (rset.next());
         }
-        
+
         rset.close();
         return listeProcesMemeDate;
     }
-    
+
     /**
      * Objet jury associé à un jury de la base de données
      * 
      * @param tupleJury
-     * @param tupleProces 
+     * @param tupleProces
      * @return TupleJury
      * @throws SQLException
      * @throws IFT287Exception
      */
-    public TupleJuryProces getJuryProces(TupleJury tupleJury, TupleProces tupleProces) throws SQLException, IFT287Exception
+    public TupleJuryProces getJuryProces(TupleJury tupleJury, TupleProces tupleProces)
+            throws SQLException, IFT287Exception
     {
         TupleJuryProces tupleJuryProces = null;
         stmtExisteJuryProces.setInt(1, tupleJury.getNas());
         stmtExisteJuryProces.setInt(2, tupleProces.getId());
         ResultSet rset = stmtExisteJuryProces.executeQuery();
 
-        if (rset.next()) {
+        if (rset.next())
+        {
             tupleJuryProces = new TupleJuryProces(rset.getInt(1), rset.getInt(2));
         }
 
         rset.close();
         return tupleJuryProces;
-}
+    }
+
+    /**
+     * Verification d'un jury qui aurait déjà été assigné au proces
+     * 
+     * @param tupleJury
+     * @param tupleProces
+     * @return boolean
+     * @throws SQLException
+     */
+    public boolean memeProces(TupleJury tupleJury, TupleProces tupleProces) throws SQLException
+    {
+        stmtExisteJuryProces.setInt(1, tupleJury.getNas());
+        stmtExisteJuryProces.setInt(2, tupleProces.getId());
+        ResultSet rset = stmtExisteJuryProces.executeQuery();
+
+        if (rset.next())
+        {
+            rset.close();
+            return true;
+        }
+
+        rset.close();
+        return false;
+    }
 }

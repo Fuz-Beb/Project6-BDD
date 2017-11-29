@@ -10,17 +10,17 @@ import java.util.ArrayList;
  */
 public class TableProces
 {
-    private PreparedStatement stmtExisteProces;
-    private PreparedStatement stmtInsertProces;
-    private PreparedStatement stmtSelectProcesNonTermine;
-    private PreparedStatement stmtTerminerProces;
-    private PreparedStatement stmtVerificationProcesDecision;
-    private PreparedStatement stmtProcesJugeEnCours;
-    private PreparedStatement stmtVerificationProcesDevantJury;
-    private PreparedStatement stmtSelectJugeDansProces;
-    private PreparedStatement stmtSelectAllProcesNonTermine;
-    private PreparedStatement stmtSelectAll;
-    private PreparedStatement stmtSelectAllDecisionNull;
+    private static PreparedStatement stmtExisteProces;
+    private static PreparedStatement stmtInsertProces;
+    private static PreparedStatement stmtSelectProcesNonTermine;
+    private static PreparedStatement stmtTerminerProces;
+    private static PreparedStatement stmtVerificationProcesDecision;
+    private static PreparedStatement stmtProcesJugeEnCours;
+    private static PreparedStatement stmtVerificationProcesDevantJury;
+    private static PreparedStatement stmtSelectJugeDansProces;
+    private static PreparedStatement stmtSelectAllProcesNonTermine;
+    private static PreparedStatement stmtSelectAll;
+    private static PreparedStatement stmtSelectAllDecisionNull;
 
     private Connexion cx;
 
@@ -75,7 +75,7 @@ public class TableProces
      * @throws SQLException
      * @throws IFT287Exception
      */
-    public TupleProces getProces(TupleProces tupleProces) throws SQLException, IFT287Exception
+    public static TupleProces getProces(TupleProces tupleProces) throws SQLException, IFT287Exception
     {
         stmtExisteProces.setInt(1, tupleProces.getId());
         ResultSet rset = stmtExisteProces.executeQuery();
@@ -83,10 +83,6 @@ public class TableProces
         if (rset.next())
             tupleProces = new TupleProces(tupleProces.getId(), rset.getInt(2), rset.getDate(3), rset.getInt(4),
                     rset.getInt(5), rset.getInt(6));
-
-        // Si la decision a été prise
-        if (rset.getObject(7) != null)
-            tupleProces.setDecision(rset.getInt(7));
 
         rset.close();
         return tupleProces;

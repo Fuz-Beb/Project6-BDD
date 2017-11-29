@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class GestionJuryProces
 {
-    private TableJury jury;
     private TableProces proces;
     private TableJuryProces juryProces;
     private Connexion cx;
@@ -17,6 +16,7 @@ public class GestionJuryProces
      * 
      * @param jury
      * @param proces
+     * @param juryProces 
      * @throws IFT287Exception
      */
     public GestionJuryProces(TableJury jury, TableProces proces, TableJuryProces juryProces) throws IFT287Exception
@@ -30,7 +30,6 @@ public class GestionJuryProces
             throw new IFT287Exception(
                     "Les instances de juge et de proces n'utilisent pas la même connexion au serveur");
 
-        this.jury = jury;
         this.proces = proces;
         this.juryProces = juryProces;
     }
@@ -50,7 +49,8 @@ public class GestionJuryProces
                 throw new IFT287Exception("Proces n'existe pas : " + tupleProces.getId());
             if (!proces.devantJury(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + " doit se tenir devant un juge seul");
-            
+            if (juryProces.memeJour(tupleJury, tupleProces))
+                throw new IFT287Exception("Le jury " + tupleJury.getNas() + " a déjà un procès en même temps que le procès " + tupleProces.getId());
             juryProces.assignerProces(tupleJury, tupleProces);
             
             cx.commit();

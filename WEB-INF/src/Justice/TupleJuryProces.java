@@ -1,7 +1,7 @@
 package Justice;
 
 /**
- * Permet de représenter un tuple de la table jury.
+ * Permet de représenter un tuple de la table juryProces.
  */
 public class TupleJuryProces
 {

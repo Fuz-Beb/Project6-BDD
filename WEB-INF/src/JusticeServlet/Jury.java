@@ -80,7 +80,7 @@ public class Jury extends HttpServlet
                             // Assigner le jury
                             synchronized (gestionUpdate)
                             {
-                                gestionUpdate.getGestionJury().assignerProces(
+                                gestionUpdate.getGestionJuryProces().assignerProces(
                                         new TupleJury(Integer.parseInt(request.getParameter("NasAssigner"))),
                                         new TupleProces(Integer.parseInt(request.getParameter("ProcesAssigner"))));
                             }

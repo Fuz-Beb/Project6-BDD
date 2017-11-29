@@ -87,6 +87,8 @@ CONTENT="Gestion des jurys">
     	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
     	ArrayList<TupleJury> list = gestionInterrogation.getGestionJury().affichage();
       ArrayList<TupleJury> listAll = gestionInterrogation.getGestionJury().affichageAll();
+      ArrayList<TupleJuryProces> listJuryProces = gestionInterrogation.getGestionJuryProces().affichage();
+      ArrayList<TupleProces> listProces = gestionInterrogation.getGestionProces().retourneAllDecisionNull();
 
     	for (int i = 0; i < listAll.size(); i++)
     	{
@@ -99,8 +101,6 @@ CONTENT="Gestion des jurys">
     <label for="ProcesAssigner">au procès numéro</label>
     <SELECT name = "ProcesAssigner" size="1">
     <%
-    	ArrayList<TupleProces> listProces = gestionInterrogation.getGestionProces().retourneAllDecisionNull();
-
     	for (int i = 0; i < listProces.size(); i++)
     	{
     %>
@@ -160,6 +160,26 @@ CONTENT="Gestion des jurys">
 		<TD><%= listAll.get(i).getNom() %></TD>
     <TD><%= listAll.get(i).getSexe() %></TD>
 		<TD><%= listAll.get(i).getAge() %></TD>
+</TR>
+<% } %>
+</TABLE>
+
+<H3>Liste des jurys assignés aux procès</H3>
+
+<TABLE BORDER=1 WIDTH=600>
+
+<TR>
+<TH>Jury_id</TH>
+<TH>Procès_id</TH>
+</TR>
+
+<%
+	for (int i = 0 ; i < listJuryProces.size(); i++)
+	{
+%>
+<TR>
+		<TD><%= listJuryProces.get(i).getJury_id() %></TD>
+		<TD><%= listJuryProces.get(i).getProces_id() %></TD>
 </TR>
 <% } %>
 </TABLE>

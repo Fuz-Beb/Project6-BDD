@@ -11,12 +11,9 @@ import java.util.ArrayList;
 public class TableJury
 {
     private static PreparedStatement stmtExiste;
-    private static PreparedStatement stmtExisteJuryProces;
     private static PreparedStatement stmtInsert;
-    private static PreparedStatement stmtInsertJuryProces;
     private static PreparedStatement stmtSelect;
     private static PreparedStatement stmtSelectAll;
-    private static PreparedStatement stmtUpdateOcuppeJuryProces;
     private Connexion cx;
 
     /**
@@ -34,12 +31,7 @@ public class TableJury
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Jury\" where \"nas\" = ?");
         stmtInsert = cx.getConnection().prepareStatement(
                 "insert into \"Jury\" (\"nas\", \"prenom\", \"nom\", \"sexe\", \"age\", \"occupe\") "
-                        + "values (?,?,?,?,?,false)");
-        stmtExisteJuryProces = cx.getConnection()
-                .prepareStatement("select * from \"JuryProces\" where \"Jury_id\" = ? and \"Proces_id\" = ?");
-        stmtInsertJuryProces = cx.getConnection()
-                .prepareStatement("insert into \"JuryProces\" (\"Jury_id\", \"Proces_id\")" + "values (?,?)");
-        stmtUpdateOcuppeJuryProces = cx.getConnection().prepareStatement("update \"Jury\" set \"occupe\" = true where \"nas\" = ?");
+                        + "values (?,?,?,?,?,false)");        
     }
 
     /**
@@ -67,7 +59,7 @@ public class TableJury
         ResultSet rset = stmtExiste.executeQuery();
 
         if (rset.next())
-            tupleJury = new TupleJury(tupleJury.getNas(), rset.getString(2), rset.getString(3), rset.getString(4),
+            tupleJury = new TupleJury(rset.getInt(1), rset.getString(2), rset.getString(3), rset.getString(4),
                     rset.getInt(5));
 
         rset.close();
@@ -156,34 +148,5 @@ public class TableJury
         stmtInsert.setObject(4, tupleJury.getSexe());
         stmtInsert.setInt(5, tupleJury.getAge());
         stmtInsert.executeUpdate();
-    }
-
-    /**
-     * Assigner un proces à un jury
-     * 
-     * @param tupleProces
-     * @param tupleJury
-     * @throws SQLException
-     * @throws IFT287Exception
-     */
-    public void assignerProces(TupleJury tupleJury, TupleProces tupleProces) throws SQLException, IFT287Exception
-    {
-        stmtExisteJuryProces.setInt(1, tupleJury.getNas());
-        stmtExisteJuryProces.setInt(2, tupleProces.getId());
-
-        ResultSet rset = stmtExisteJuryProces.executeQuery();
-
-        if (rset.next())
-        {
-            throw new IFT287Exception(
-                    "Le jury " + tupleJury.getNas() + " est déjà assigné au procès " + tupleProces.getId());
-        }
-
-        stmtInsertJuryProces.setInt(1, tupleJury.getNas());
-        stmtInsertJuryProces.setInt(2, tupleProces.getId());
-        stmtInsertJuryProces.executeUpdate();
-        
-        stmtUpdateOcuppeJuryProces.setInt(1, tupleJury.getNas());
-        stmtUpdateOcuppeJuryProces.executeUpdate();
     }
 }

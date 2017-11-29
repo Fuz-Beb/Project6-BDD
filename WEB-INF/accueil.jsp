@@ -31,6 +31,7 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
   ArrayList<TuplePartie> listPartie = gestionInterrogation.getGestionPartie().retourneAll();
   ArrayList<TupleSeance> listSeance = gestionInterrogation.getGestionSeance().retourneAll();
   ArrayList<TupleAvocat> listAvocat = gestionInterrogation.getGestionAvocat().affichage();
+  ArrayList<TupleJuryProces> listJuryProces = gestionInterrogation.getGestionJuryProces().affichage();
 %>
 
 <br><br>
@@ -139,6 +140,27 @@ CONTENT="Page d'accueil système de gestion d'un palais de justice.">
 			<TD><%= listJuryAll.get(i).getAge() %></TD>
 		</TR>
 	<% } %>
+</TABLE>
+
+<br><br>
+<H3>Liste des jurys assignés aux procès</H3>
+
+<TABLE BORDER=1 WIDTH=600>
+
+<TR>
+<TH>Jury_id</TH>
+<TH>Procès_id</TH>
+</TR>
+
+<%
+	for (int i = 0 ; i < listJuryProces.size(); i++)
+	{
+%>
+<TR>
+		<TD><%= listJuryProces.get(i).getJury_id() %></TD>
+		<TD><%= listJuryProces.get(i).getProces_id() %></TD>
+</TR>
+<% } %>
 </TABLE>
 
 <br><br>

@@ -13,6 +13,7 @@ public class GestionJustice
     private TablePartie partie;
     private TableSeance seance;
     private TableJury jury;
+    private TableJuryProces juryProces;
     private TableJuge juge;
     private TableAvocat avocat;
 
@@ -20,6 +21,7 @@ public class GestionJustice
     private GestionPartie gestionPartie;
     private GestionSeance gestionSeance;
     private GestionJury gestionJury;
+    private GestionJuryProces gestionJuryProces;
     private GestionJuge gestionJuge;
     private GestionAvocat gestionAvocat;
 
@@ -42,13 +44,15 @@ public class GestionJustice
         partie = new TablePartie(cx);
         seance = new TableSeance(cx);
         jury = new TableJury(cx);
+        juryProces = new TableJuryProces(cx);
         juge = new TableJuge(cx);
         avocat = new TableAvocat(cx);
 
         gestionProces = new GestionProces(proces, seance, juge, partie);
         gestionPartie = new GestionPartie(partie, avocat);
         gestionSeance = new GestionSeance(seance, proces);
-        gestionJury = new GestionJury(jury, proces);
+        gestionJury = new GestionJury(jury);
+        gestionJuryProces = new GestionJuryProces(jury, proces, juryProces);
         gestionJuge = new GestionJuge(juge, proces);
         gestionAvocat = new GestionAvocat(avocat);
     }
@@ -171,5 +175,13 @@ public class GestionJustice
     public void setGestionAvocat(GestionAvocat gestionAvocat)
     {
         this.gestionAvocat = gestionAvocat;
+    }
+
+    /**
+     * @return the gestionJuryProces
+     */
+    public GestionJuryProces getGestionJuryProces()
+    {
+        return gestionJuryProces;
     }
 }

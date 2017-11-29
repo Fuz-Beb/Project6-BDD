@@ -69,6 +69,9 @@ public class Juge extends HttpServlet
                     {
                         justiceUpdate.getGestionJuge().ajouter(new TupleJuge(id, prenom, nom, age));
                     }
+                    
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/juge.jsp");
+                    dispatcher.forward(request, response);
                 } // Si l'utilisateur souhaite supprimer un juge
                 else if (request.getParameter("Supprimer") != null)
                 {
@@ -81,6 +84,9 @@ public class Juge extends HttpServlet
                             justiceUpdate.getGestionJuge()
                                     .retirer(new TupleJuge(Integer.parseInt(request.getParameter("IdASupprimer"))));
                         }
+                        
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/juge.jsp");
+                        dispatcher.forward(request, response);
                     }
                 }
                 else if (request.getParameter("param") != null)
@@ -88,9 +94,6 @@ public class Juge extends HttpServlet
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                     dispatcher.forward(request, response);
                 }
-
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/juge.jsp");
-                dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
             {

@@ -87,6 +87,9 @@ public class Proces extends HttpServlet
                         justiceUpdate.getGestionProces()
                                 .creer(new TupleProces(id, juge_id, dateSql, devantJury, partieD_id, partieP_id, -1));
                     }
+                    
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/proces.jsp");
+                    dispatcher.forward(request, response);
                 }
                 else if (request.getParameter("Terminer") != null)
                 {
@@ -105,6 +108,9 @@ public class Proces extends HttpServlet
                             justiceUpdate.getGestionProces().terminer(
                                     new TupleProces(Integer.parseInt(request.getParameter("IdATerminer"))), decision);
                         }
+                        
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/proces.jsp");
+                        dispatcher.forward(request, response);
                     }
                 }
                 else if (request.getParameter("param") != null)
@@ -112,9 +118,6 @@ public class Proces extends HttpServlet
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                     dispatcher.forward(request, response);
                 }
-
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/proces.jsp");
-                dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
             {

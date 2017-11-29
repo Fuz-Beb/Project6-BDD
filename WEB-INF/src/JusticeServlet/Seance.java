@@ -76,6 +76,9 @@ public class Seance extends HttpServlet
                     {
                         justiceUpdate.getGestionSeance().ajout(new TupleSeance(id, proces_id, dateSql));
                     }
+                    
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/seance.jsp");
+                    dispatcher.forward(request, response);
                 } // Si l'utilisateur souhaite supprimer une seance
                 else if (request.getParameter("Supprimer") != null)
                 {
@@ -88,6 +91,9 @@ public class Seance extends HttpServlet
                             justiceUpdate.getGestionSeance()
                                     .supprimer(new TupleSeance(Integer.parseInt(request.getParameter("IdASupprimer"))));
                         }
+                        
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/seance.jsp");
+                        dispatcher.forward(request, response);
                     }
                 }
                 else if (request.getParameter("param") != null)
@@ -95,9 +101,6 @@ public class Seance extends HttpServlet
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                     dispatcher.forward(request, response);
                 }
-
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/seance.jsp");
-                dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
             {

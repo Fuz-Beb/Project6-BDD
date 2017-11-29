@@ -1,19 +1,12 @@
 package JusticeServlet;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import Justice.GestionJustice;
-import Justice.IFT287Exception;
 
 public class Accueil extends HttpServlet
 {
@@ -22,7 +15,6 @@ public class Accueil extends HttpServlet
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         RequestDispatcher dispatcher;
-
         // Vérification de l'état de la session
         HttpSession session = request.getSession();
         Integer etat = (Integer) session.getAttribute("etat");
@@ -71,7 +63,7 @@ public class Accueil extends HttpServlet
     // donc, si le servlet est appelé avec la méthode GET
     // on appelle POST
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        doPost(request, response);
+    {   
+        doPost(request, response);  
     }
 }

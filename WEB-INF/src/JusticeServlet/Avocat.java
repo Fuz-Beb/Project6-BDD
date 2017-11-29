@@ -63,15 +63,15 @@ public class Avocat extends HttpServlet
                     {
                         justiceUpdate.getGestionAvocat().ajouter(new TupleAvocat(id, prenom, nom, type));
                     }
+                    
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/avocat.jsp");
+                    dispatcher.forward(request, response);
                 }
                 else if (request.getParameter("param") != null)
                 {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                     dispatcher.forward(request, response);
                 }
-
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/avocat.jsp");
-                dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
             {
@@ -84,7 +84,6 @@ public class Avocat extends HttpServlet
             }
             catch (Exception e)
             {
-                e.printStackTrace();
                 e.printStackTrace();
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.toString());
             }

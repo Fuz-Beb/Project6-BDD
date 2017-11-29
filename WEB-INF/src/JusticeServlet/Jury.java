@@ -69,6 +69,9 @@ public class Jury extends HttpServlet
                     {
                         gestionUpdate.getGestionJury().ajouter(new TupleJury(nas, prenom, nom, sexe, age));
                     }
+                    
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jury.jsp");
+                    dispatcher.forward(request, response);
                 }
                 else if (request.getParameter("Assigner") != null)
                 {
@@ -84,6 +87,9 @@ public class Jury extends HttpServlet
                                         new TupleJury(Integer.parseInt(request.getParameter("NasAssigner"))),
                                         new TupleProces(Integer.parseInt(request.getParameter("ProcesAssigner"))));
                             }
+                            
+                            RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jury.jsp");
+                            dispatcher.forward(request, response);
                         }
                     }
                 }
@@ -92,9 +98,6 @@ public class Jury extends HttpServlet
                     RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/accueil.jsp");
                     dispatcher.forward(request, response);
                 }
-
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jury.jsp");
-                dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
             {

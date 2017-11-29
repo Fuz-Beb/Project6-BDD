@@ -63,6 +63,9 @@ public class Partie extends HttpServlet
                     {
                         justiceUpdate.getGestionPartie().ajout(new TuplePartie(id, prenom, nom, avocat_id));
                     }
+                    
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/partie.jsp");
+                    dispatcher.forward(request, response);
                 }
                 else if (request.getParameter("param") != null)
                 {
@@ -70,8 +73,6 @@ public class Partie extends HttpServlet
                     dispatcher.forward(request, response);
                 }
 
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/partie.jsp");
-                dispatcher.forward(request, response);
             }
             catch (IFT287Exception e)
             {

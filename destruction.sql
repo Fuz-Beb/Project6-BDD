@@ -9,6 +9,9 @@ DROP TABLE IF EXISTS "Juge" CASCADE;
 -- Suppression de la table Jury
 DROP TABLE IF EXISTS "Jury" CASCADE;
 
+-- Suppression de la table JuryProces
+DROP TABLE IF EXISTS "JuryProces" CASCADE;
+
 -- Suppression de la table Partie
 DROP TABLE IF EXISTS "Partie" CASCADE;
 

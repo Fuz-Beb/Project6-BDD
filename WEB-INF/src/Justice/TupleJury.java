@@ -10,7 +10,6 @@ public class TupleJury
     private String nom;
     private String sexe;
     private int age;
-    private int proces_id = -1;
 
     /**
      * Constructeur par défaut
@@ -40,7 +39,7 @@ public class TupleJury
      */
     public TupleJury(int nas, String prenom, String nom, String sexe, int age)
     {
-        this(nas);
+        this.nas = nas;
         this.prenom = prenom;
         this.nom = nom;
         this.sexe = sexe;
@@ -130,22 +129,5 @@ public class TupleJury
     public void setAge(int age)
     {
         this.age = age;
-    }
-
-    /**
-     * @return the proces_id
-     */
-    public int getProces_id()
-    {
-        return proces_id;
-    }
-
-    /**
-     * @param proces_id
-     *            the proces_id to set
-     */
-    public void setProces_id(int proces_id)
-    {
-        this.proces_id = proces_id;
     }
 }

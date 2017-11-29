@@ -11,9 +11,12 @@ import java.util.ArrayList;
 public class TableJury
 {
     private static PreparedStatement stmtExiste;
+    private static PreparedStatement stmtExisteJuryProces;
     private static PreparedStatement stmtInsert;
+    private static PreparedStatement stmtInsertJuryProces;
     private static PreparedStatement stmtSelect;
-    private static PreparedStatement stmtInsertProcesDansJury;
+    private static PreparedStatement stmtSelectAll;
+    private static PreparedStatement stmtUpdateOcuppeJuryProces;
     private Connexion cx;
 
     /**
@@ -26,13 +29,17 @@ public class TableJury
     public TableJury(Connexion cx) throws SQLException
     {
         this.cx = cx;
-        stmtSelect = cx.getConnection().prepareStatement("select * from \"Jury\" where \"Proces_id\" is null");
-        stmtInsertProcesDansJury = cx.getConnection()
-                .prepareStatement("update \"Jury\" set \"Proces_id\" = ? where \"nas\" = ?");
+        stmtSelect = cx.getConnection().prepareStatement("select * from \"Jury\" where \"occupe\" = false");
+        stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Jury\"");
         stmtExiste = cx.getConnection().prepareStatement("select * from \"Jury\" where \"nas\" = ?");
         stmtInsert = cx.getConnection().prepareStatement(
-                "insert into \"Jury\" (\"nas\", \"prenom\", \"nom\", \"sexe\", \"age\", \"Proces_id\") "
-                        + "values (?,?,?,?,?,null)");
+                "insert into \"Jury\" (\"nas\", \"prenom\", \"nom\", \"sexe\", \"age\", \"occupe\") "
+                        + "values (?,?,?,?,?,false)");
+        stmtExisteJuryProces = cx.getConnection()
+                .prepareStatement("select * from \"JuryProces\" where \"Jury_id\" = ? and \"Proces_id\" = ?");
+        stmtInsertJuryProces = cx.getConnection()
+                .prepareStatement("insert into \"JuryProces\" (\"Jury_id\", \"Proces_id\")" + "values (?,?)");
+        stmtUpdateOcuppeJuryProces = cx.getConnection().prepareStatement("update \"Jury\" set \"occupe\" = true where \"nas\" = ?");
     }
 
     /**
@@ -48,7 +55,7 @@ public class TableJury
     /**
      * Objet jury associé à un jury de la base de données
      * 
-     * @param tupleJury 
+     * @param tupleJury
      * @return TupleJury
      * @throws SQLException
      * @throws IFT287Exception
@@ -60,11 +67,8 @@ public class TableJury
         ResultSet rset = stmtExiste.executeQuery();
 
         if (rset.next())
-            tupleJury = new TupleJury(tupleJury.getNas(), rset.getString(2), rset.getString(3), rset.getString(4), rset.getInt(5));
-
-        // Si la decision a été prise
-        if (rset.getObject(6) != null)
-            tupleJury.setProces_id(rset.getInt(6));
+            tupleJury = new TupleJury(tupleJury.getNas(), rset.getString(2), rset.getString(3), rset.getString(4),
+                    rset.getInt(5));
 
         rset.close();
         return tupleJury;
@@ -73,7 +77,7 @@ public class TableJury
     /**
      * Vérifie si le jury existe
      * 
-     * @param tupleJury 
+     * @param tupleJury
      * @return boolean
      * @throws SQLException
      */
@@ -87,7 +91,7 @@ public class TableJury
     }
 
     /**
-     * Affiche la liste des jurys
+     * Affiche la liste des jurys disponible
      * 
      * @return String
      * @throws SQLException
@@ -113,6 +117,32 @@ public class TableJury
     }
 
     /**
+     * Affiche la liste des jurys
+     * 
+     * @return String
+     * @throws SQLException
+     * @throws IFT287Exception
+     */
+    public ArrayList<TupleJury> affichageAll() throws SQLException, IFT287Exception
+    {
+        ArrayList<TupleJury> listJury = new ArrayList<TupleJury>();
+
+        ResultSet rset = stmtSelectAll.executeQuery();
+
+        if (rset.next())
+        {
+            do
+            {
+                // Ajout de chacun des juges dans la liste
+                listJury.add(getJury(new TupleJury(rset.getInt(1))));
+            }
+            while (rset.next());
+        }
+        rset.close();
+        return listJury;
+    }
+    
+    /**
      * Ajout d'un nouveau jury dans la base de données
      * 
      * @param tupleJury
@@ -134,11 +164,26 @@ public class TableJury
      * @param tupleProces
      * @param tupleJury
      * @throws SQLException
+     * @throws IFT287Exception
      */
-    public void assignerProces(TupleJury tupleJury, TupleProces tupleProces) throws SQLException
+    public void assignerProces(TupleJury tupleJury, TupleProces tupleProces) throws SQLException, IFT287Exception
     {
-        stmtInsertProcesDansJury.setInt(1, tupleProces.getId());
-        stmtInsertProcesDansJury.setInt(2, tupleJury.getNas());
-        stmtInsertProcesDansJury.executeUpdate();
+        stmtExisteJuryProces.setInt(1, tupleJury.getNas());
+        stmtExisteJuryProces.setInt(2, tupleProces.getId());
+
+        ResultSet rset = stmtExisteJuryProces.executeQuery();
+
+        if (rset.next())
+        {
+            throw new IFT287Exception(
+                    "Le jury " + tupleJury.getNas() + " est déjà assigné au procès " + tupleProces.getId());
+        }
+
+        stmtInsertJuryProces.setInt(1, tupleJury.getNas());
+        stmtInsertJuryProces.setInt(2, tupleProces.getId());
+        stmtInsertJuryProces.executeUpdate();
+        
+        stmtUpdateOcuppeJuryProces.setInt(1, tupleJury.getNas());
+        stmtUpdateOcuppeJuryProces.executeUpdate();
     }
 }

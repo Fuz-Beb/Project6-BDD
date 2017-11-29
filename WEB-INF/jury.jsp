@@ -86,11 +86,12 @@ CONTENT="Gestion des jurys">
     <%
     	GestionJustice gestionInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
     	ArrayList<TupleJury> list = gestionInterrogation.getGestionJury().affichage();
+      ArrayList<TupleJury> listAll = gestionInterrogation.getGestionJury().affichageAll();
 
-    	for (int i = 0; i < list.size(); i++)
+    	for (int i = 0; i < listAll.size(); i++)
     	{
         %>
-        <OPTION> <%= list.get(i).getNas() %> </OPTION>
+        <OPTION> <%= listAll.get(i).getNas() %> </OPTION>
 
     <% } %>
 		</SELECT>
@@ -111,8 +112,6 @@ CONTENT="Gestion des jurys">
   	<input type="submit" name="Assigner" value="Assigner">
 </form>
 
-
-
 <H3>Liste des jurys disponibles</H3>
 
 <TABLE BORDER=1 WIDTH=600>
@@ -123,7 +122,6 @@ CONTENT="Gestion des jurys">
 <TH>Nom</TH>
 <TH>Sexe</TH>
 <TH>Age</TH>
-<TH>Num. Procès</TH>
 </TR>
 
 <%
@@ -136,11 +134,36 @@ CONTENT="Gestion des jurys">
 		<TD><%= list.get(i).getNom() %></TD>
     <TD><%= list.get(i).getSexe() %></TD>
 		<TD><%= list.get(i).getAge() %></TD>
-    <TD><%= list.get(i).getProces_id() %></TD>
 </TR>
 <% } %>
-
 </TABLE>
+
+<H3>Liste des jurys</H3>
+
+<TABLE BORDER=1 WIDTH=600>
+
+<TR>
+<TH>NAS</TH>
+<TH>Prenom</TH>
+<TH>Nom</TH>
+<TH>Sexe</TH>
+<TH>Age</TH>
+</TR>
+
+<%
+	for (int i = 0 ; i < listAll.size(); i++)
+	{
+%>
+<TR>
+		<TD><%= listAll.get(i).getNas() %></TD>
+		<TD><%= listAll.get(i).getPrenom() %></TD>
+		<TD><%= listAll.get(i).getNom() %></TD>
+    <TD><%= listAll.get(i).getSexe() %></TD>
+		<TD><%= listAll.get(i).getAge() %></TD>
+</TR>
+<% } %>
+</TABLE>
+
 <%-- inclusion d'une autre page pour l'affichage des messages d'erreur--%>
 <jsp:include page="/WEB-INF/messageErreur.jsp" />
 <BR>

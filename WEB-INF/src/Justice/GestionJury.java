@@ -54,7 +54,7 @@ public class GestionJury
     }
 
     /**
-     * Afficher la liste des jurys
+     * Afficher la liste des jurys disponible
      * 
      * @return ArrayList<TupleJury>
      *
@@ -80,6 +80,31 @@ public class GestionJury
     }
 
     /**
+     * Afficher la liste des jurys
+     * 
+     * @return ArrayList<TupleJury>
+     *
+     * @throws Exception
+     */
+    public ArrayList<TupleJury> affichageAll() throws Exception
+    {
+        ArrayList<TupleJury> tupleJury = null;
+
+        try
+        {
+            tupleJury = jury.affichageAll();
+
+            cx.commit();
+
+            return tupleJury;
+        }
+        catch (Exception e)
+        {
+            cx.rollback();
+            throw e;
+        }
+    }
+    /**
      * Assigner un proces à un jury
      * 
      * @param tupleProces
@@ -94,8 +119,7 @@ public class GestionJury
                 throw new IFT287Exception("Proces n'existe pas : " + tupleProces.getId());
             if (!proces.devantJury(tupleProces))
                 throw new IFT287Exception("Le proces " + tupleProces.getId() + " doit se tenir devant un juge seul");
-            if (!(tupleJury.getProces_id() == -1))
-                throw new IFT287Exception("Le jury " + tupleJury.getNas() + " a déjà un procès");
+            
             jury.assignerProces(tupleJury, tupleProces);
             
             cx.commit();

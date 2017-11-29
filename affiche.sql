@@ -7,6 +7,9 @@ SELECT * FROM "Juge";
 -- Affichage de la table Jury
 SELECT * FROM "Jury";
 
+-- Affichage de la table JuryProces
+SELECT * FROM "JuryProces";
+
 -- Affichage de la table Partie
 SELECT * FROM "Partie";
 

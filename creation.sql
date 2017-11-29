@@ -105,10 +105,19 @@ CREATE TABLE  "Jury" (
   "nom" VARCHAR(45) NULL,
   "sexe" VARCHAR(1) NOT NULL,
   "age" INT NOT NULL,
-  "Proces_id" INT,
-  PRIMARY KEY ("nas"),
-  CONSTRAINT "fk_Personne_Proces1"
-    FOREIGN KEY ("Proces_id")
-    REFERENCES "Proces" ("id")
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+  "occupe" BOOLEAN NOT NULL,
+  PRIMARY KEY ("nas"));
+
+  -- -----------------------------------------------------
+  -- Table "JuryProces"
+  -- -----------------------------------------------------
+CREATE TABLE "JuryProces" (
+  "Jury_id" integer,
+  "Proces_id" integer,
+  CONSTRAINT "JuryProces_pkey" PRIMARY KEY ("Jury_id", "Proces_id"),
+  CONSTRAINT "fk_Proces" FOREIGN KEY ("Proces_id")
+      REFERENCES "Proces" (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "fk_Jury" FOREIGN KEY ("Jury_id")
+      REFERENCES "Jury" (nas) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION);

@@ -17,7 +17,7 @@ public class TupleProces
     private int devantJury;
     private int partieDefenderesse_id;
     private int partiePoursuivant_id;
-    private int decision = -1;
+    private int decision;
 
     /**
      * Constructeur par défaut
@@ -45,9 +45,10 @@ public class TupleProces
      * @param devantJury
      * @param partieDefenderesse_id
      * @param partiePoursuivant_id
+     * @param decision 
      */
     public TupleProces(int id, int juge_id, Date date, int devantJury, int partieDefenderesse_id,
-            int partiePoursuivant_id)
+            int partiePoursuivant_id, int decision)
     {
         this(id);
         this.juge_id = juge_id;
@@ -55,6 +56,7 @@ public class TupleProces
         this.devantJury = devantJury;
         this.partieDefenderesse_id = partieDefenderesse_id;
         this.partiePoursuivant_id = partiePoursuivant_id;
+        this.decision = decision;
     }
 
     /**

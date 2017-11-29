@@ -82,7 +82,7 @@ public class TableProces
 
         if (rset.next())
             tupleProces = new TupleProces(tupleProces.getId(), rset.getInt(2), rset.getDate(3), rset.getInt(4),
-                    rset.getInt(5), rset.getInt(6));
+                    rset.getInt(5), rset.getInt(6), rset.getInt(7));
 
         rset.close();
         return tupleProces;

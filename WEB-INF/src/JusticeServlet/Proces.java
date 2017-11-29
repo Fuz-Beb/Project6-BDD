@@ -85,7 +85,7 @@ public class Proces extends HttpServlet
                     synchronized (justiceUpdate)
                     {
                         justiceUpdate.getGestionProces()
-                                .creer(new TupleProces(id, juge_id, dateSql, devantJury, partieD_id, partieP_id));
+                                .creer(new TupleProces(id, juge_id, dateSql, devantJury, partieD_id, partieP_id, -1));
                     }
                 }
                 else if (request.getParameter("Terminer") != null)

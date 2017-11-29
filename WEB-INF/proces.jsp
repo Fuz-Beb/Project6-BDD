@@ -22,7 +22,7 @@ CONTENT="Gestion des proces">
 
 <%	List<String> listeMessageErreur = new LinkedList<String>();
 	Boolean erreur = false;
-	
+
 	GestionJustice justiceInterrogation = (GestionJustice) session.getAttribute("justiceInterrogation");
 	ArrayList<TupleJuge> listJuge = justiceInterrogation.getGestionJuge().affichageAll();
 	ArrayList<TuplePartie> listPartie = justiceInterrogation.getGestionPartie().retourneAll();
@@ -35,7 +35,7 @@ CONTENT="Gestion des proces">
         request.setAttribute("listeMessageErreur", listeMessageErreur);
         erreur = true;
 	}
-	
+
 	if (listPartie.size() == 0 || listPartie.size() == 1)
 	{
 		listeMessageErreur.add("Création impossible : La base de données doit contenir au moins deux parties");
@@ -57,7 +57,7 @@ CONTENT="Gestion des proces">
 		</tr>
 		<tr>
 			<form action="Proces" method="POST">
-<%				
+<%
 			if (listProces.size() == 0)
 			{ %>
 				<td width="120px"> 0 </td> <%
@@ -115,7 +115,7 @@ CONTENT="Gestion des proces">
 		</SELECT>
 	</p>
 	<p> <label for="Decision">Decision :</label>
-  		<SELECT name="Decision" size="1"> 
+  		<SELECT name="Decision" size="1">
   			<OPTION>Poursuite gagne</OPTION>
   			<OPTION>Poursuite perd</OPTION>
   		</SELECT>

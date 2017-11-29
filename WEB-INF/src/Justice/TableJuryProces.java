@@ -1,12 +1,9 @@
 package Justice;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import JusticeServlet.Proces;
 
 /**
  * Permet d'effectuer les accès à la table jury.

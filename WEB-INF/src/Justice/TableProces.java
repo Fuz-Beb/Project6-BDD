@@ -21,6 +21,7 @@ public class TableProces
     private static PreparedStatement stmtSelectAllProcesNonTermine;
     private static PreparedStatement stmtSelectAll;
     private static PreparedStatement stmtSelectAllDecisionNull;
+    private static PreparedStatement stmtJugeDisponibleDate;
 
     private Connexion cx;
 
@@ -55,6 +56,8 @@ public class TableProces
         stmtSelectAll = cx.getConnection().prepareStatement("select * from \"Proces\" ORDER BY id");
         stmtSelectAllDecisionNull = cx.getConnection()
                 .prepareStatement("select * from \"Proces\" where \"decision\" = -1 ORDER BY id");
+        stmtJugeDisponibleDate = cx.getConnection().prepareStatement(
+                "select \"date\" from \"Proces\" where \"decision\" = -1 and \"Juge_id\" = ? ORDER BY id");
     }
 
     /**
@@ -326,5 +329,29 @@ public class TableProces
         rset.close();
 
         return listProces;
+    }
+
+    /**
+     * @param tupleJuge
+     * @param tupleProces
+     * @return
+     * @throws SQLException
+     */
+    public boolean disponibleDate(TupleJuge tupleJuge, TupleProces tupleProces) throws SQLException
+    {
+        stmtJugeDisponibleDate.setInt(1, tupleJuge.getId());
+        ResultSet rset = stmtJugeDisponibleDate.executeQuery();
+
+        if (rset.next())
+        {
+            if (!tupleProces.getDate().equals(rset.getDate(1)))
+            {
+                rset.close();
+                return true;
+            }
+        }
+
+        rset.close();
+        return false;
     }
 }

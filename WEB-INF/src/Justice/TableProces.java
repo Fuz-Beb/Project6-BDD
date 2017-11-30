@@ -334,7 +334,7 @@ public class TableProces
     /**
      * @param tupleJuge
      * @param tupleProces
-     * @return
+     * @return boolean
      * @throws SQLException
      */
     public boolean disponibleDate(TupleJuge tupleJuge, TupleProces tupleProces) throws SQLException

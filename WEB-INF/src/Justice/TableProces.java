@@ -344,14 +344,17 @@ public class TableProces
 
         if (rset.next())
         {
-            if (!tupleProces.getDate().equals(rset.getDate(1)))
+            do
             {
-                rset.close();
-                return true;
-            }
+                if (!tupleProces.getDate().equals(rset.getDate(1)))
+                {
+                    rset.close();
+                    return false;
+                }
+            } while (rset.next());
         }
 
         rset.close();
-        return false;
+        return true;
     }
 }

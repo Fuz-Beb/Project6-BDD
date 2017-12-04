@@ -346,7 +346,7 @@ public class TableProces
         {
             do
             {
-                if (!tupleProces.getDate().equals(rset.getDate(1)))
+                if (tupleProces.getDate().equals(rset.getDate(1)))
                 {
                     rset.close();
                     return false;
